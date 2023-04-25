@@ -14,7 +14,7 @@ public class gameBoard {
 	/***
 	 * Tile object that holds all info about specific tiles.
 	 * For example, bool isHit "has a shot been fired here
-	 * , bool isOccupied() "has the player this board belongs to 
+	 * ,bool isOccupied() "has the player this board belongs to 
 	 * put a ship there", ship Ship() "the ship placed there.
 	 * mayb a pointer or reference to the player ship" <- ?
 	 */
