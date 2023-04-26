@@ -9,6 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -16,9 +19,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 
-
-
 public class Main extends Application {
+	private gameBoard board1 = new gameBoard();
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -49,6 +51,7 @@ public class Main extends Application {
 			
 			player2.setSelected(true);
 			
+			//button to confirm selection
 			Button selected = new Button("Confirm");
 			selected.setStyle("-fx-background-color: teal; -fx-text-fill: white");
 			
@@ -94,6 +97,38 @@ public class Main extends Application {
 			vbox.setPadding(new Insets(0, 0, 10, 0));
 			Scene scene2 = new Scene(vbox);
 			
+			//Label for player1's grid
+			Label player1Grid = new Label("Player1's Grid: ");
+			player1Grid.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 20pt");
+			
+			
+			//creating grid for first board
+			GridPane grid1 = new GridPane();
+			
+			for(int row = 0; row < board1.getWidth(); row++) {
+				for(int col = 0; col < board1.getHeight(); col++) {
+					Rectangle rect = new Rectangle(50, 50);
+					//create alternating color grid
+					if((row+col)%2 == 0) rect.setFill(Color.ROYALBLUE);
+					else {rect.setFill(Color.BLUE);}
+					//adding border
+					rect.setStrokeWidth(2);
+					rect.setStroke(Color.WHITE);
+					grid1.add(rect, col, row);
+				}
+			}
+			//switch player button
+			Button switchPlayer = new Button("Switch Player");
+			switchPlayer.setStyle("-fx-background-color: blue; -fx-text-fill: white");
+			
+			//grid1 layout vbox
+			VBox grid1Layout = new VBox(10, player1Grid, grid1, switchPlayer);
+			grid1Layout.setAlignment(Pos.CENTER);
+			grid1Layout.setStyle("-fx-background-color: black; -fx-font-weight: bold");
+			grid1Layout.setPadding(new Insets(10));
+			
+			Scene playerBoard = new Scene(grid1Layout);
+			//player type selected
 			selected.setOnAction(e -> 
 			{
 			//if choose to play against another player
@@ -106,7 +141,8 @@ public class Main extends Application {
 					String nameFirstP, nameSecondP;
 					nameFirstP = name1.getText();
 					nameSecondP = name2.getText();
-					System.out.println(nameFirstP + nameSecondP);
+					System.out.println(nameFirstP + " " + nameSecondP);
+					primaryStage.setScene(playerBoard);
 					
 				}
 				);
@@ -126,14 +162,20 @@ public class Main extends Application {
 				//setting scene
 				primaryStage.setScene(scene3);
 				
-				//storing textfield inputs
-				String nameFirst;
-				nameFirst = name1.getText();
-				System.out.println(nameFirst);
+				mybutton.setOnAction(event -> 
+				{
+					//storing textfield inputs
+					String nameFirst;
+					nameFirst = name1.getText();
+					System.out.println(nameFirst);
+					primaryStage.setScene(playerBoard);
+				}
+				);
 			}
 			
 			}
 			);
+			
 			
 			
 			primaryStage.show();
@@ -145,4 +187,14 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+
+	public gameBoard getBoard1() {
+		return board1;
+	}
+
+	public void setBoard1(gameBoard board1) {
+		this.board1 = board1;
+	}
+	
+	
 }
