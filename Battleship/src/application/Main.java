@@ -97,10 +97,6 @@ public class Main extends Application {
 			vbox.setPadding(new Insets(0, 0, 10, 0));
 			Scene scene2 = new Scene(vbox);
 			
-			//Label for player1's grid
-			Label player1Grid = new Label("Player1's Grid: ");
-			player1Grid.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 20pt");
-			
 			
 			//creating grid for first board
 			GridPane grid1 = new GridPane();
@@ -121,13 +117,7 @@ public class Main extends Application {
 			Button switchPlayer = new Button("Switch Player");
 			switchPlayer.setStyle("-fx-background-color: blue; -fx-text-fill: white");
 			
-			//grid1 layout vbox
-			VBox grid1Layout = new VBox(10, player1Grid, grid1, switchPlayer);
-			grid1Layout.setAlignment(Pos.CENTER);
-			grid1Layout.setStyle("-fx-background-color: black; -fx-font-weight: bold");
-			grid1Layout.setPadding(new Insets(10));
 			
-			Scene playerBoard = new Scene(grid1Layout);
 			//player type selected
 			selected.setOnAction(e -> 
 			{
@@ -135,17 +125,36 @@ public class Main extends Application {
 			if(player2.isSelected()) {
 				//change scene to ask for both players' names
 				primaryStage.setScene(scene2);
+				
 				mybutton.setOnAction(event -> 
 				{
+					if(!name1.getText().isBlank() && !name2.getText().isEmpty()) 
+					{
 					//storing textfield inputs
 					String nameFirstP, nameSecondP;
+					
 					nameFirstP = name1.getText();
 					nameSecondP = name2.getText();
+					
+					Label player1Grid = new Label(nameFirstP);
+					player1Grid.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 20pt");
+					
+					//grid1 layout vbox
+					VBox grid1Layout = new VBox(10, player1Grid, grid1, switchPlayer);
+					grid1Layout.setAlignment(Pos.CENTER);
+					grid1Layout.setStyle("-fx-background-color: black; -fx-font-weight: bold");
+					grid1Layout.setPadding(new Insets(10));
+					
+					Scene playerBoard = new Scene(grid1Layout);
+					
 					System.out.println(nameFirstP + " " + nameSecondP);
 					primaryStage.setScene(playerBoard);
 					
-				}
+					}
+					}
+					
 				);
+				
 			}
 			else {
 				//if choose to play against computer
@@ -164,11 +173,30 @@ public class Main extends Application {
 				
 				mybutton.setOnAction(event -> 
 				{
+					if(!name1.getText().isBlank()){
 					//storing textfield inputs
 					String nameFirst;
 					nameFirst = name1.getText();
-					System.out.println(nameFirst);
+					
+					Label player1Grid = new Label(nameFirst + "'s Grid");
+					player1Grid.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 20pt");
+					
+					//Button confirming ship position
+					Button confirm = new Button("Confirm");
+					confirm.setStyle("-fx-background-color: teal; -fx-text-fill: white");
+					
+					
+					//grid1 layout vbox
+					VBox grid1Layout = new VBox(10, player1Grid, grid1, confirm);
+					grid1Layout.setAlignment(Pos.CENTER);
+					grid1Layout.setStyle("-fx-background-color: black; -fx-font-weight: bold");
+					grid1Layout.setPadding(new Insets(10));
+					
+					Scene playerBoard = new Scene(grid1Layout);
+					
+					System.out.println(nameFirst + "'s Grid");
 					primaryStage.setScene(playerBoard);
+					}
 				}
 				);
 			}
