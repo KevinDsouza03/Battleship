@@ -2,7 +2,7 @@
  * gameBoard class that holds all information about a player/ai's board
  */
 package application;
-import java.util.ArrayList;
+//import java.util.Arrays;
 
 public class gameBoard {
 	/***
@@ -10,7 +10,7 @@ public class gameBoard {
 	 */
 	private static final int width = 10;
 	private static final int height = 10;
-	private ArrayList<tile>[][] board;
+	private tile[][] board;
 	/***
 	 * Tile object that holds all info about specific tiles.
 	 * For example, bool isHit "has a shot been fired here
@@ -24,13 +24,12 @@ public class gameBoard {
 	 * initial board.
 	 */
 	public gameBoard() {
-	    board = new ArrayList[width][height];
-	    for (int i = 0; i < width; i++) {
-	        for (int j = 0; j < height; j++) {
-	            board[i][j] = new ArrayList<tile>();
-	            board[i][j].add(new tile());
-	        }
-	    }
+	    board = new tile[width][height];
+//	    for (int i = 0; i < width; i++) {
+//	        for (int j = 0; j < height; j++) {
+//	            board[i][j] = new tile();
+//	        }
+//	    }
 		/***
 		 * go through the entire arrayList and add a defaulted tile
 		 * we can update after user places their ships.
@@ -44,14 +43,17 @@ public class gameBoard {
 	 * @param n
 	 * @return
 	 */
-	public boolean getTileisHit(int m, int n) { return board[m][n].get(0).isHit(); }
+	public boolean getTileisHit(int m, int n) { return board[m][n].isHit(); }
 	/***
 	 * returns user specified index occupied value
 	 * @param m
 	 * @param n
 	 * @return
 	 */
-	public boolean getTileisOccupied(int m, int n) { return board[m][n].get(0).isOccupied(); }
+	public boolean getTileisOccupied(int m, int n) { return board[m][n].isOccupied(); }
 
 
+	public int getHeight() {return this.height;}
+	
+	public int getWidth() {return this.width;}
 }
