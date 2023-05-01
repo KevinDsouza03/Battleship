@@ -11,16 +11,16 @@ public abstract class player {
 	 * Represents all the player's ships
 	 */
 	private String name;
-	private ArrayList<ship>[] Navy; //kevin: Unsure of the proper name : )
+	private ArrayList<ship>[] fleet; 
 	
 	
 	public player() {
-		Navy = new ArrayList<ship>();
+		fleet = new ArrayList<ship>();
 		name = "Bob";
 	}
 	
 	public player(String n) {
-		Navy = new ArrayList<ship>();
+		fleet = new ArrayList<ship>();
 		name = n;
 	}
 	
