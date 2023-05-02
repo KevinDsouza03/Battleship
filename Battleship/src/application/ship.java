@@ -50,7 +50,7 @@ public class ship {
 	}
 
 	/**
-	 * getter function that returns location
+	 * getter function that returns locations of ship. 
 	 * @return
 	 */
 	public Pair<Integer, Integer>[] getLocation() {

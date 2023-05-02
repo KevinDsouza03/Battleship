@@ -1,5 +1,4 @@
 package application;
-import java.util.ArrayList;
 
 /***
  * Player class to represent what a Battleship player would have!
@@ -11,23 +10,19 @@ public abstract class player {
 	 * Represents all the player's ships
 	 */
 	private String name;
-	private ArrayList<ship>[] fleet; 
+	private ship fleet[]; 
 	
 	
 	public player() {
-		fleet = new ArrayList<ship>();
+		fleet = new ship[5];
 		name = "Bob";
 	}
 	
-	public player(String n) {
-		fleet = new ArrayList<ship>();
+	public player(String n, ship[] f) {
+		fleet = new ship[5];
+		System.arraycopy(f, 0, fleet, 0, 5);
 		name = n;
 	}
-	
-	/***
-	 * function to be implemented as to how a player fires a shot.
-	 * attack
-	 */
 	
 	/***
 	 * set player name, from first scene
@@ -40,6 +35,10 @@ public abstract class player {
 	 */
 	public String getName() {return name;}
 	
+	/***
+	 * function to be implemented as to how a player fires a shot.
+	 * attack
+	 */
 	public abstract void fire();
 	
 	
