@@ -213,6 +213,8 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
+		gameBoard player1 = new gameBoard();
+		player1.printBoard();
 		launch(args);
 	}
 
