@@ -25,11 +25,11 @@ public class gameBoard {
 	 */
 	public gameBoard() {
 	    board = new tile[width][height];
-//	    for (int i = 0; i < width; i++) {
-//	        for (int j = 0; j < height; j++) {
-//	            board[i][j] = new tile();
-//	        }
-//	    }
+	    for (int i = 0; i < width; i++) {
+	        for (int j = 0; j < height; j++) {
+	            board[i][j] = new tile(); // must instantiate otherwise null error
+	        }
+	    }
 		/***
 		 * go through the entire arrayList and add a defaulted tile
 		 * we can update after user places their ships.
@@ -53,7 +53,26 @@ public class gameBoard {
 	public boolean getTileisOccupied(int m, int n) { return board[m][n].isOccupied(); }
 
 
-	public int getHeight() {return this.height;}
+	public int getHeight() {return gameBoard.height;}
 	
-	public int getWidth() {return this.width;}
+	public int getWidth() {return gameBoard.width;}
+	
+	public void printBoard() {
+		String temp = "";
+		for(int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				if (this.getTileisOccupied(i, j) && this.getTileisHit(i, j) != true) {
+					temp = "O "; // is the space occupied and not hit?
+				}
+				else if (this.getTileisHit(i, j)) {
+					temp = "X ";
+				}
+				else {
+					temp = "_ ";
+				}
+				System.out.print(temp);
+			}
+			System.out.print("\n");
+		}
+	}
 }

@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 
 public class Main extends Application {
@@ -110,6 +111,9 @@ public class Main extends Application {
 					//adding border
 					rect.setStrokeWidth(2);
 					rect.setStroke(Color.WHITE);
+					final int Fcol = col; // final ints because the event -> function() was giving an error
+					final int Frow = row;
+					rect.setOnMouseClicked(event -> RectangleClickShoot(event, Fcol, Frow)); // this line initializes the rectangle for how to handle a click.
 					grid1.add(rect, col, row);
 				}
 			}
@@ -149,9 +153,12 @@ public class Main extends Application {
 					
 					System.out.println(nameFirstP + " " + nameSecondP);
 					primaryStage.setScene(playerBoard);
+					gameBoard player1 = new gameBoard();
+					player1.printBoard();
 					
 					}
 					}
+				
 					
 				);
 				
@@ -224,5 +231,11 @@ public class Main extends Application {
 		this.board1 = board1;
 	}
 	
-	
+	private void RectangleClickShoot(MouseEvent event, int col, int row) {
+	    int x = col;
+	    int y = row;
+	    System.out.println("(" + x + ", " + y + ")");
+	    // Do something with the coordinates here
+	}
+
 }
