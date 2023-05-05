@@ -113,7 +113,8 @@ public class Main extends Application {
 					rect.setStroke(Color.WHITE);
 					final int Fcol = col; // final ints because the event -> function() was giving an error
 					final int Frow = row;
-					rect.setOnMouseClicked(event -> RectangleClickShoot(event, Fcol, Frow)); // this line initializes the rectangle for how to handle a click.
+					rect.setOnMouseClicked(event -> {RectangleClickShoot(event, Fcol, Frow);
+							rect.setFill(Color.DARKSLATEGRAY);}); // this line initializes the rectangle for how to handle a click.
 					grid1.add(rect, col, row);
 				}
 			}
