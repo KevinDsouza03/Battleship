@@ -4,9 +4,15 @@
  */
 package application;
 
-public class tile {
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+
+public class tile extends Rectangle {
 	private boolean hit;
 	private boolean occupied;
+	int x;
+	int y;
+	
 	/***
 	 * hit for if a shot has been fired. If fired, change to true
 	 * and each frame can check isHit() everytime. 
@@ -19,7 +25,11 @@ public class tile {
 	 * Only a default constructor as we can just update each
 	 * tile individually
 	 */
-	public tile() {
+	public tile(int x, int y) {
+		super(x, y, 50, 50);
+		//adding border
+		super.setStrokeWidth(2);
+		super.setStroke(Color.WHITE);
 		hit = false;
 		occupied = false;
 	}
