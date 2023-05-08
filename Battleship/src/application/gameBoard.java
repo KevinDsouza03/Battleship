@@ -27,7 +27,7 @@ public class gameBoard {
 	    board = new tile[width][height];
 	    for (int i = 0; i < width; i++) {
 	        for (int j = 0; j < height; j++) {
-	            board[i][j] = new tile(); // must instantiate otherwise null error
+	            board[i][j] = new tile(i, j); // must instantiate otherwise null error
 	        }
 	    }
 		/***
@@ -36,6 +36,9 @@ public class gameBoard {
 		 */
 	}
 
+	public tile getTile(int m, int n) {
+		return board[m][n];
+	}
 	/***
 	 * returns user specified index hit Value
 	 * Done since this will be something that is constantly called.
@@ -74,5 +77,11 @@ public class gameBoard {
 			}
 			System.out.print("\n");
 		}
+	}
+	public void setTileOccupied(int m, int n) {
+		board[m][n].updateOccupied(true);
+	}
+	public void setTileHit(int m, int n) {
+		board[m][n].updateHit(true);
 	}
 }
