@@ -102,8 +102,6 @@ public class Main extends Application {
 			vbox.setPadding(new Insets(0, 0, 10, 0));
 			root = new Scene(vbox);
 			
-			Rectangle ship1 = new Rectangle(50, 100);
-			ship1.setFill(Color.BLUE);
 			
 			
 			//creating radiobuttons for different ship
@@ -130,59 +128,75 @@ public class Main extends Application {
 			Destroyer.setToggleGroup(radioGroup2);
 			Carrier.setSelected(true);
 			
+			ship Carrier1 = new ship(5);
+			ship BattleShip1 = new ship(4);
+			ship Cruiser1 = new ship(3);
+			ship Submarine1 = new ship(3);
+			ship Destroyer1 = new ship(2);
+			
+			
 			//creating grid for first board
 			GridPane grid1 = new GridPane();
 			
 			for(int row = 0; row < board1.getWidth(); row++) {
 				for(int col = 0; col < board1.getHeight(); col++) {
-					
+	
 					
 					//create alternating color grid
 					if((row+col)%2 == 0) board1.getTile(row, col).setFill(Color.ROYALBLUE);
 					else {board1.getTile(row, col).setFill(Color.BLUE);}
 					
-					final int Fcol = col; // final ints because the event -> function() was giving an error
-					final int Frow = row;
+					int Fcol = col; // final ints because the event -> function() was giving an error
+					int Frow = row;
 					board1.getTile(row, col).setOnMouseClicked(event -> {RectangleClickShoot(event, Frow, Fcol);
+					
 							if(Carrier.isSelected()) {
-								//if(ValidShip(5, Frow, Fcol)) {
+								
+								//if(ValidShip(Carrier1, Frow, Fcol)) {
 									System.out.println(board1.getTile(Frow, Fcol).getX()+ board1.getTile(Frow, Fcol).getY());
 									board1.getTile(Frow, Fcol).setFill(Color.DARKSLATEGRAY);
 									board1.setTileOccupied(Frow, Fcol);
-									Carrier.setDisable(true);
+									Carrier1.addLocation(board1.getTile(Fcol, Frow));
 								//}
+								//else if(Carrier1.getLocation().size() == Carrier1.getLength()) Carrier.setDisable(true);
 							}
 							else if(BattleShip.isSelected()) {
-								//if(ValidShip(4, Frow, Fcol)) {
+								if(BattleShip1.getLocation().size() < BattleShip1.getLength()) {
 									System.out.println(board1.getTile(Frow, Fcol).getX()+ board1.getTile(Frow, Fcol).getY());
 									board1.getTile(Frow, Fcol).setFill(Color.DARKSLATEGRAY);
 									board1.setTileOccupied(Frow, Fcol);
-									BattleShip.setDisable(true);
-								//}
+									BattleShip1.addLocation(board1.getTile(Fcol, Frow));
+								}
+								else BattleShip.setDisable(true);
 							}
 							else if(Cruiser.isSelected()) {
-								//if(ValidShip(3, Frow, Fcol)) {
-								System.out.println(board1.getTile(Frow, Fcol).getX()+ board1.getTile(Frow, Fcol).getY());
-								board1.getTile(Frow, Fcol).setFill(Color.DARKSLATEGRAY);
-								board1.setTileOccupied(Frow, Fcol);
-								Cruiser.setDisable(true);
-								//}
+								if(Cruiser1.getLocation().size() < Cruiser1.getLength()) {
+									System.out.println(board1.getTile(Frow, Fcol).getX()+ board1.getTile(Frow, Fcol).getY());
+									board1.getTile(Frow, Fcol).setFill(Color.DARKSLATEGRAY);
+									board1.setTileOccupied(Frow, Fcol);
+									Cruiser1.addLocation(board1.getTile(Fcol, Frow));
+								}
+								else Cruiser.setDisable(true);
+								
 							}
 							else if(Submarine.isSelected()) {
-								//if(ValidShip(3, Frow, Fcol)) {
-								System.out.println(board1.getTile(Frow, Fcol).getX());
-								board1.getTile(Frow, Fcol).setFill(Color.DARKSLATEGRAY);
-								board1.setTileOccupied(Frow, Fcol);
-								Submarine.setDisable(true);
-								//}
+								if(Submarine1.getLocation().size() < Cruiser1.getLength()) {
+									System.out.println(board1.getTile(Frow, Fcol).getX()+ board1.getTile(Frow, Fcol).getY());
+									board1.getTile(Frow, Fcol).setFill(Color.DARKSLATEGRAY);
+									board1.setTileOccupied(Frow, Fcol);
+									Submarine1.addLocation(board1.getTile(Fcol, Frow));
+								}
+								else Submarine.setDisable(true);
 							}
 							else if(Destroyer.isSelected()) {
-								//if(ValidShip(5, Frow, Fcol)) {
-								System.out.println(board1.getTile(Frow, Fcol).getX());
-								board1.getTile(Frow, Fcol).setFill(Color.DARKSLATEGRAY);
-								board1.setTileOccupied(Frow, Fcol);
-								Destroyer.setDisable(true);
-								//}
+								if(Destroyer1.getLocation().size() < Destroyer1.getLength()) {
+									System.out.println(board1.getTile(Frow, Fcol).getX()+ board1.getTile(Frow, Fcol).getY());
+									board1.getTile(Frow, Fcol).setFill(Color.DARKSLATEGRAY);
+									board1.setTileOccupied(Frow, Fcol);
+									Destroyer1.addLocation(board1.getTile(Fcol, Frow));
+								}
+								else Destroyer.setDisable(true);
+								
 							}
 					});
 					// this line initializes the rectangle for how to handle a click.
@@ -268,7 +282,7 @@ public class Main extends Application {
 					
 					
 					//grid1 layout vbox
-					VBox grid1Layout = new VBox(10, player1Grid, grid1, ship1, Carrier, BattleShip, Cruiser, Submarine, Destroyer, confirm);
+					VBox grid1Layout = new VBox(10, player1Grid, grid1, Carrier, BattleShip, Cruiser, Submarine, Destroyer, confirm);
 					grid1Layout.setAlignment(Pos.CENTER);
 					grid1Layout.setStyle("-fx-background-color: black; -fx-font-weight: bold");
 					grid1Layout.setPadding(new Insets(10));
@@ -312,19 +326,47 @@ public class Main extends Application {
 	    int x = col;
 	    int y = row;
 	    System.out.println("(" + x + ", " + y + ")");
-	    board1.setTileOccupied(x, y);
+	   
 	    // Do something with the coordinates here
 	}
-	public boolean ValidShip(int len, int col, int row) {
+	public boolean ValidShip(ship ship1, int row, int col) {
+			if(ship1.getLocation().size() == ship1.getLength()) return false;
 		
-			if(board1.getTileisOccupied(col, row)) return false;
-			/*
-			//if(!(board1.getTile(row-1, col).isOccupied())||!(board1.getTile(row+1, col).isOccupied())||!(board1.getTile(row, col-1).isOccupied())||!(board1.getTile(row, col+1).isOccupied())){
-					return false;
+			if(board1.getTileisOccupied(row, col)) return false;
+			
+			if(ship1.getLocation().size()==1) {
+				for(tile s: ship1.getLocation()){
+					if(((s.getX()==row-1||s.getX() == row+1) && s.getY() == col )|| ((s.getY()==col+1||s.getY()==col-1) && s.getX() == row)) return true;
+				}
+				return false;
+			}
+			
+			if(ship1.getLocation().size()>1) {
+				boolean vertical = false;
+				boolean horizontal = false;
+				double temprow = ship1.getLocation().get(0).getX();
+				double tempcol = ship1.getLocation().get(0).getY();
+				if((ship1.getLocation().get(1).getX()==temprow-1||ship1.getLocation().get(1).getX() == temprow+1) && ship1.getLocation().get(1).getY() == tempcol ) {
+					horizontal = true;
 					
 				}
+				else if ((ship1.getLocation().get(1).getY()==tempcol+1||ship1.getLocation().get(1).getY()==tempcol-1) && ship1.getLocation().get(1).getX() == temprow){
+					vertical = true;
+					
+				}
+				for(tile s: ship1.getLocation()){
+					if(s==ship1.getLocation().get(0)) continue;
 		
-		}*/
+					else if(horizontal) {
+						if((s.getX()==row-1||s.getX() == row+1) && s.getY() == col) return true;
+					}
+					else if(vertical) {
+						if((s.getY()==col+1||s.getY()==col-1) && s.getX() == row) return true;
+					}
+					
+				}
+				return false;
+			}
 		return true;
 	}
 
