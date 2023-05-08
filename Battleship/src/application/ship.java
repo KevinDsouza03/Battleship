@@ -1,10 +1,11 @@
 package application;
 
+import java.util.ArrayList;
 
 public class ship {
 	//size and location of ship
 	private int length;
-	private tile location[];
+	private ArrayList<tile> location;
 	//private tile shipLoc[];
 	
 	/**
@@ -12,9 +13,10 @@ public class ship {
 	 * @param len
 	 * @param loc
 	 */
-	public ship(int len, tile loc[]) {
+	public ship(int len) {
 		length = len;
-		location = loc;
+		location = new ArrayList<tile>(len);
+		
 	}
 	
 	/**
@@ -23,7 +25,7 @@ public class ship {
 	 */
 	public boolean isSunk() {
 		for(int i = 0; i < length; i++){
-			if(!location[i].isHit()) return false;
+			if(!location.get(i).isHit()) return false;
 		}
 		return true;
 	}
@@ -40,16 +42,16 @@ public class ship {
 	 * getter function that returns location
 	 * @return
 	 */
-	public tile[] getLocation() {
+	public ArrayList<tile> getLocation() {
 		return location;
 	}
 
 	/**
-	 * sets location of ship
+	 * adds location of ship
 	 * @param location
 	 */
-	public void setLocation(tile location[]) {
-		this.location = location;
+	public void addLocation(tile loc) {
+		location.add(loc);
 	}
 
 
