@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -18,6 +19,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;
 
 
 public class Main extends Application {
@@ -189,7 +192,6 @@ public class Main extends Application {
 									Submarine1.addLocation(board1.getTile(Frow, Fcol));
 									if(Submarine1.getLocation().size() == Submarine1.getLength()) Submarine.setDisable(true);
 								}
-								else Submarine.setDisable(true);
 							}
 							else if(Destroyer.isSelected()) {
 								if(ValidShip(Destroyer1, Frow, Fcol)) {
@@ -296,7 +298,11 @@ public class Main extends Application {
 					
 					System.out.println(nameFirst + "'s Grid");
 					primaryStage.setScene(root);
-				
+
+//					//create new scene here and then on spacebar press, go to it.
+//					VBox player1Board = new VBox()
+					
+					
 					}
 				}
 				);
