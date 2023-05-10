@@ -36,6 +36,15 @@ public abstract class player {
 	public String getName() {return name;}
 	
 	/***
+	 * return fleet
+	 * @return
+	 */
+	public ship[] getFleet() {
+		return fleet;
+	}
+	
+	
+	/***
 	 * function to be implemented as to how a player fires a shot.
 	 * attack
 	 */

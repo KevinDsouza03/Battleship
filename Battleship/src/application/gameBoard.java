@@ -35,6 +35,22 @@ public class gameBoard {
 		 * we can update after user places their ships.
 		 */
 	}
+	
+	public gameBoard(player p) {
+	    board = new tile[width][height];
+	    ship toCheck[] = p.getFleet(); // basically getting all the occupied ships w coordinates.
+	    for (int i = 0; i < width; i++) {
+	        for (int j = 0; j < height; j++) {
+	            board[i][j] = new tile(i, j);
+	        }
+	    }
+	    for (ship s : toCheck) {
+	        for (tile t : s.getLocation()) {;
+	           	this.setTileOccupied(t.x, t.y);
+	        }
+	    }
+	}
+
 
 	public tile getTile(int m, int n) {
 		return board[m][n];
@@ -64,9 +80,10 @@ public class gameBoard {
 		String temp = "";
 		for(int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
-				if (this.getTileisOccupied(i, j) && this.getTileisHit(i, j) != true) {
-					temp = "O "; // is the space occupied and not hit?
+				if (this.getTileisOccupied(i, j) && this.getTileisHit(i, j)) {
+					temp = "* "; // is the space occupied and not hit?
 				}
+				else if (this.getTileisOccupied(i,j)) {temp = "O ";}
 				else if (this.getTileisHit(i, j)) {
 					temp = "X ";
 				}
@@ -83,5 +100,28 @@ public class gameBoard {
 	}
 	public void setTileHit(int m, int n) {
 		board[m][n].updateHit(true);
+	}
+	/***
+	 * Function to check if all ships are sunk for a given player. Compares board to actual player.
+	 * @param ifLost
+	 * @return
+	 */
+	public boolean checkWin(player ifLost) { //function essentially checks if I have lost by seeing if all my occupied are hit.
+		ship toCheck[] = new ship[5];
+		System.arraycopy(ifLost.getFleet(), 0, toCheck, 0, 5);
+		// now we have our copy of the fleet and iterate through it all to check for a win.
+		for (ship shipLocationArray : toCheck) { // get our locationArray from the players ship(s)
+			for (tile shipLocation : shipLocationArray.getLocation()) { // check each location for being hit on our board.
+				if (this.getTileisHit(shipLocation.x, shipLocation.y)) {
+					continue;
+				}
+				else {
+					System.out.println("Not all ships are sunk");
+					return false;
+				}
+			}
+		}
+		System.out.println("All ships are sunk! " + ifLost.getName() + " has lost");
+		return true;
 	}
 }

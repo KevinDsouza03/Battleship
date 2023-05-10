@@ -299,10 +299,9 @@ public class Main extends Application {
 					System.out.println(nameFirst + "'s Grid");
 					primaryStage.setScene(root);
 
-//					//create new scene here and then on spacebar press, go to it.
-//					VBox player1Board = new VBox()
 					
-					
+					consoleRunner temp = new consoleRunner();
+					//System.exit(0);
 					}
 				}
 				);

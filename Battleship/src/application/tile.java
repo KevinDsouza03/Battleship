@@ -28,6 +28,8 @@ public class tile extends Rectangle {
 	public tile(int x, int y) {
 		super(x, y, 50, 50);
 		//adding border
+		this.x = x;
+		this.y = y;
 		super.setStrokeWidth(2);
 		super.setStroke(Color.WHITE);
 		hit = false;
