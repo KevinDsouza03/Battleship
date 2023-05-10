@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -17,6 +18,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;
 
 
 public class Main extends Application {
@@ -198,6 +201,7 @@ public class Main extends Application {
 									}
 									else Submarine.setDisable(true);
 								}
+
 								//when destroyer is chosen
 								else if(Destroyer.isSelected()) {
 									//check if tile is valid for ship
@@ -211,6 +215,7 @@ public class Main extends Application {
 										if(Destroyer1.getLocation().size() == Destroyer1.getLength()) Destroyer.setDisable(true);
 									}
 									
+
 								}
 								//confirm button is enabled when all ships are on the grid
 								if(Carrier.isDisabled() && BattleShip.isDisabled() && Cruiser.isDisabled() && Submarine.isDisabled() && Destroyer.isDisabled()) confirm.setDisable(false);
@@ -294,9 +299,8 @@ public class Main extends Application {
 						
 						
 					
-					
+
 				});
-				
 			
 				}
 				

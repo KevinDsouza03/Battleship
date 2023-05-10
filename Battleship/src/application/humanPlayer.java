@@ -1,18 +1,31 @@
 package application;
-import java.util.Scanner;
 public class humanPlayer extends player{
 
 	public humanPlayer() {
-		
+		super();
 	}
 
+	public humanPlayer(String n, ship[] f) {
+		super(n,f);
+	}
 	@Override
-	public void fire() {
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("Where to shoot? x y");
-		//Unaware of how to ask for input. If i ask for input in the function, how do we implement with javaFX?
-		//if I take it in from the function, is there anypoint for abstract? Unless theres a different function such as
-		// play() or something.
+	public boolean fire(int x, int y, gameBoard attack) {
+		if (attack.getTileisHit(x, y)) {
+			//if already hit, invalid move: return false
+			System.out.println(this.getName() + ", bad shot Lose turn");
+			return false;
+		}
+		//human so just shoot and display if good or not
+		attack.setTileHit(x, y);
+		if (attack.getTileisOccupied(x, y)) {
+			//if we hit a ship, return a good instance
+			System.out.println("Good Shot!");
+			return true;
+		}
+		else {
+			System.out.println("Miss! ");
+		}
+		return false;
 	}
 
 }
