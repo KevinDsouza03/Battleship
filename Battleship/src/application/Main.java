@@ -11,7 +11,6 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -24,7 +23,11 @@ import javafx.scene.input.KeyCode;
 
 
 public class Main extends Application {
-	private gameBoard board1 = new gameBoard();
+	//human player board
+	private gameBoard boardH = new gameBoard();
+	
+	//computer player board
+	private gameBoard boardC = new gameBoard();
 	private Scene root;
 	//private Rectangle [][] rect = new Rectangle[10][10];
 	@Override
@@ -37,278 +40,275 @@ public class Main extends Application {
 			//add image
 			Image image = new Image("file:Battleship.jpg");
 			ImageView battleship = new ImageView(image);
-			ImageView battleship2 = new ImageView(image);
-			ImageView battleship3 = new ImageView(image);
-			
-			//add label to select player 2 or computer players
-			Label selection = new Label("Please select whether you would like to play against another player or the computer: ");
-			selection.setStyle("-fx-text-fill: white");
-			
-			//add radio buttons
-			RadioButton player2 = new RadioButton("Human Player");
-			RadioButton computerPlayer = new RadioButton("Computer Player");
-			player2.setStyle("-fx-text-fill: white");
-			computerPlayer.setStyle("-fx-text-fill: white");
-			
-			//create toggle group
-			ToggleGroup radioGroup = new ToggleGroup();
-			player2.setToggleGroup(radioGroup);
-			computerPlayer.setToggleGroup(radioGroup);
-			
-			player2.setSelected(true);
-			
-			//button to confirm selection
-			Button selected = new Button("Confirm");
-			selected.setStyle("-fx-background-color: teal; -fx-text-fill: white");
-			
-			VBox layout1 = new VBox(10, battleship, selection, player2, computerPlayer, selected);
-			layout1.setStyle("-fx-background-color: black; -fx-font-weight: bold");
-			layout1.setAlignment(Pos.CENTER);
-			layout1.setPadding(new Insets(0, 0, 10, 0));
-			
-			root = new Scene(layout1);
-			//root.getStylesheets().add("application.css");
-			primaryStage.setScene(root);
 			
 			
-			//add label for player1 name
-			Label player1Name = new Label("Please enter Player 1's name: ");
-			player1Name.setStyle("-fx-text-fill: white");
+			//add label for human player name
+			Label playerName = new Label("Please enter your name: ");
+			playerName.setStyle("-fx-text-fill: white");
 			
-			//textfield for player1 name
-			TextField name1 = new TextField();
+			//textfield for human player name
+			TextField name = new TextField();
 			
 			//Hbox for label and textfield
-			HBox firstName = new HBox(10, player1Name, name1);
+			HBox Name = new HBox(10, playerName, name);
 			
-			firstName.setPadding(new Insets(10));
+			Name.setPadding(new Insets(10));
 
-			//add label for player2 name
-			Label player2Name = new Label("Please enter Player 2's name: ");
-			player2Name.setStyle("-fx-text-fill: white");
-			
-			//add textfield for player2's name
-			TextField name2 = new TextField();
-			
-			//hbox for label and textfield for player 2 name
-			HBox secondName = new HBox(10, player2Name, name2);
-			secondName.setPadding(new Insets(0, 0, 0, 10));
 			
 			//button to click to start game
-			Button mybutton = new Button("Start!");
-			mybutton.setStyle("-fx-background-color: teal; -fx-text-fill: white");
+			Button start = new Button("Start!");
+			start.setStyle("-fx-background-color: teal; -fx-text-fill: white");
 
-			//Creating VBox for if 2 players are selected
-			VBox vbox = new VBox(10, battleship2, firstName, secondName, mybutton);
-			vbox.setAlignment(Pos.CENTER);
-			vbox.setStyle("-fx-background-color: black; -fx-font-weight: bold");
-			vbox.setPadding(new Insets(0, 0, 10, 0));
-			root = new Scene(vbox);
+
+			//if playing computer
+			VBox vbox1 = new VBox(10, battleship, Name, start);
+			
+			//styling vbox
+			vbox1.setStyle("-fx-background-color: black; -fx-font-weight: bold");
+			vbox1.setAlignment(Pos.CENTER);
+			vbox1.setPadding(new Insets(0, 0, 10, 0));
+			
+			//creating new scene object
+			root = new Scene(vbox1);
+			
+			//setting scene
+			primaryStage.setScene(root);
+			
+
 			
 			
 			
-			//creating radiobuttons for different ship
-			
-			//add label to select ship
-			Label selectShip = new Label("Please select which ship you would like to add: ");
-			selectShip.setStyle("-fx-text-fill: white");
-			
-			//add radio buttons
-			RadioButton Carrier = new RadioButton("Carrior (length: 5)");
-			RadioButton BattleShip = new RadioButton("Battleship (length: 4)");
-			RadioButton Cruiser = new RadioButton("Cruiser (length: 3)");
-			RadioButton Submarine = new RadioButton("Submarine (length: 3)");
-			RadioButton Destroyer = new RadioButton("Destroyer (length: 2)");
-			Carrier.setStyle("-fx-text-fill: white");
-			BattleShip.setStyle("-fx-text-fill: white");
-			
-			//create toggle group
-			ToggleGroup radioGroup2 = new ToggleGroup();
-			Carrier.setToggleGroup(radioGroup2);
-			BattleShip.setToggleGroup(radioGroup2);
-			Cruiser.setToggleGroup(radioGroup2);
-			Submarine.setToggleGroup(radioGroup2);
-			Destroyer.setToggleGroup(radioGroup2);
-			Carrier.setSelected(true);
-			
-			//creating the ships
-			ship Carrier1 = new ship(5);
-			ship BattleShip1 = new ship(4);
-			ship Cruiser1 = new ship(3);
-			ship Submarine1 = new ship(3);
-			ship Destroyer1 = new ship(2);
-			
-			
-			//creating grid for first board
-			GridPane grid1 = new GridPane();
-			
-			for(int row = 0; row < board1.getWidth(); row++) {
-				for(int col = 0; col < board1.getHeight(); col++) {
-	
-					
-					//create alternating color grid
-					if((row+col)%2 == 0) board1.getTile(row, col).setFill(Color.ROYALBLUE);
-					else {board1.getTile(row, col).setFill(Color.BLUE);}
-					
-					int Fcol = col; 
-					int Frow = row;
-					board1.getTile(row, col).setOnMouseClicked(event -> {RectangleClickShoot(event, Frow, Fcol);
-					
-							if(Carrier.isSelected()) {
-								
-								if(ValidShip(Carrier1, Frow, Fcol)) {
-									System.out.println(board1.getTile(Frow, Fcol).getX()+ board1.getTile(Frow, Fcol).getY());
-									board1.getTile(Frow, Fcol).setFill(Color.DARKSLATEGRAY);
-									board1.setTileOccupied(Frow, Fcol);
-									Carrier1.addLocation(board1.getTile(Frow, Fcol));
-									if(Carrier1.getLocation().size() == Carrier1.getLength()) Carrier.setDisable(true);
-								}
-							}
-							else if(BattleShip.isSelected()) {
-								if(ValidShip(BattleShip1, Frow, Fcol)) {
-									System.out.println(board1.getTile(Frow, Fcol).getX()+ board1.getTile(Frow, Fcol).getY());
-									board1.getTile(Frow, Fcol).setFill(Color.DARKSLATEGRAY);
-									board1.setTileOccupied(Frow, Fcol);
-									BattleShip1.addLocation(board1.getTile(Frow, Fcol));
-									if(BattleShip1.getLocation().size() == BattleShip1.getLength()) BattleShip.setDisable(true);
-								}
-						
-							}
-							else if(Cruiser.isSelected()) {
-								if(ValidShip(Cruiser1, Frow, Fcol)) {
-									System.out.println(board1.getTile(Frow, Fcol).getX()+ board1.getTile(Frow, Fcol).getY());
-									board1.getTile(Frow, Fcol).setFill(Color.DARKSLATEGRAY);
-									board1.setTileOccupied(Frow, Fcol);
-									Cruiser1.addLocation(board1.getTile(Frow, Fcol));
-									if(Cruiser1.getLocation().size() == Cruiser1.getLength()) Cruiser.setDisable(true);
-								}
-								
-							}
-							else if(Submarine.isSelected()) {
-								if(ValidShip(Submarine1, Frow, Fcol)) {
-									System.out.println(board1.getTile(Frow, Fcol).getX()+ board1.getTile(Frow, Fcol).getY());
-									board1.getTile(Frow, Fcol).setFill(Color.DARKSLATEGRAY);
-									board1.setTileOccupied(Frow, Fcol);
-									Submarine1.addLocation(board1.getTile(Frow, Fcol));
-									if(Submarine1.getLocation().size() == Submarine1.getLength()) Submarine.setDisable(true);
-								}
-							}
-							else if(Destroyer.isSelected()) {
-								if(ValidShip(Destroyer1, Frow, Fcol)) {
-									System.out.println(board1.getTile(Frow, Fcol).getX()+ board1.getTile(Frow, Fcol).getY());
-									board1.getTile(Frow, Fcol).setFill(Color.DARKSLATEGRAY);
-									board1.setTileOccupied(Frow, Fcol);
-									Destroyer1.addLocation(board1.getTile(Frow, Fcol));
-									if(Destroyer1.getLocation().size() == Destroyer1.getLength()) Destroyer.setDisable(true);
-								}
-								
-							}
-					});
-					// this line initializes the rectangle for how to handle a click.
-					grid1.add(board1.getTile(row, col), col, row);
-				}
-			}
-			//switch player button
-			Button switchPlayer = new Button("Switch Player");
-			switchPlayer.setStyle("-fx-background-color: blue; -fx-text-fill: white");
-			
-			
-			//player type selected
-			selected.setOnAction(e -> 
+			start.setOnAction(event -> 
 			{
-			//if choose to play against another player
-			if(player2.isSelected()) {
-				//change scene to ask for both players' names
-				primaryStage.setScene(root);
+				//only works when name isn't empty
+				if(!name.getText().isBlank()){
+				//storing textfield inputs
+				String nameFirst;
+				nameFirst = name.getText();
 				
-				mybutton.setOnAction(event -> 
-				{
-					if(!name1.getText().isBlank() && !name2.getText().isEmpty()) 
-					{
-					//storing textfield inputs
-					String nameFirstP, nameSecondP;
-					
-					nameFirstP = name1.getText();
-					nameSecondP = name2.getText();
-					
-					Label player1Grid = new Label(nameFirstP);
-					player1Grid.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 20pt");
-					
-					
-					//grid1 layout vbox
-					VBox grid1Layout = new VBox(10, player1Grid, grid1, Carrier, BattleShip, Cruiser, Submarine, Destroyer, switchPlayer);
-					grid1Layout.setAlignment(Pos.CENTER);
-					grid1Layout.setStyle("-fx-background-color: black; -fx-font-weight: bold");
-					grid1Layout.setPadding(new Insets(10));
-					
-					root = new Scene(grid1Layout);
-					
-					System.out.println(nameFirstP + " " + nameSecondP);
-					primaryStage.setScene(root);
-					gameBoard player1 = new gameBoard();
-					player1.printBoard();
-					
-					}
-					}
+				Label humanplayerGrid = new Label(nameFirst + "'s Grid");
+				humanplayerGrid.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 20pt");
 				
-					
-				);
+				//button to confirm selection
+				Button confirm = new Button("Confirm");
+				confirm.setStyle("-fx-background-color: teal; -fx-text-fill: white");
+				confirm.setDisable(true);
 				
-			}
-			else {
-				//if choose to play against computer
-				VBox vbox2 = new VBox(10, battleship3, firstName, mybutton);
+				//creating grid for human player board
+				GridPane HPgrid = new GridPane();
 				
-				//styling vbox2
-				vbox2.setStyle("-fx-background-color: black; -fx-font-weight: bold");
-				vbox2.setAlignment(Pos.CENTER);
-				vbox2.setPadding(new Insets(0, 0, 10, 0));
+				//creating radiobuttons for different ship
 				
-				//creating new scene object
-				root = new Scene(vbox2);
+				//add label to select ship
+				Label selectShip = new Label("Please select which ship you would like to add: ");
+				selectShip.setStyle("-fx-text-fill: white");
 				
-				//setting scene
-				primaryStage.setScene(root);
+				//add radio buttons
+				RadioButton Carrier = new RadioButton("Carrior (length: 5)");
+				RadioButton BattleShip = new RadioButton("Battleship (length: 4)");
+				RadioButton Cruiser = new RadioButton("Cruiser (length: 3)");
+				RadioButton Submarine = new RadioButton("Submarine (length: 3)");
+				RadioButton Destroyer = new RadioButton("Destroyer (length: 2)");
+				Carrier.setStyle("-fx-text-fill: white");
+				BattleShip.setStyle("-fx-text-fill: white");
+				Cruiser.setStyle("-fx-text-fill: white");
+				Submarine.setStyle("-fx-text-fill: white");
+				Destroyer.setStyle("-fx-text-fill: white");
 				
-				mybutton.setOnAction(event -> 
-				{
-					if(!name1.getText().isBlank()){
-					//storing textfield inputs
-					String nameFirst;
-					nameFirst = name1.getText();
-					
-					Label player1Grid = new Label(nameFirst + "'s Grid");
-					player1Grid.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 20pt");
-					
-					//Button confirming ship position
-					Button confirm = new Button("Confirm");
-					confirm.setStyle("-fx-background-color: teal; -fx-text-fill: white");
-					
-					
-					
-					//grid1 layout vbox
-					VBox grid1Layout = new VBox(10, player1Grid, grid1, Carrier, BattleShip, Cruiser, Submarine, Destroyer, confirm);
-					grid1Layout.setAlignment(Pos.CENTER);
-					grid1Layout.setStyle("-fx-background-color: black; -fx-font-weight: bold");
-					grid1Layout.setPadding(new Insets(10));
-					
-					root = new Scene(grid1Layout);
-					
-					
-					
-					System.out.println(nameFirst + "'s Grid");
-					primaryStage.setScene(root);
+				//create toggle group
+				ToggleGroup radioGroup2 = new ToggleGroup();
+				Carrier.setToggleGroup(radioGroup2);
+				BattleShip.setToggleGroup(radioGroup2);
+				Cruiser.setToggleGroup(radioGroup2);
+				Submarine.setToggleGroup(radioGroup2);
+				Destroyer.setToggleGroup(radioGroup2);
+				Carrier.setSelected(true);
+				
+				//creating the ships
+				ship Carrier1 = new ship(5);
+				ship BattleShip1 = new ship(4);
+				ship Cruiser1 = new ship(3);
+				ship Submarine1 = new ship(3);
+				ship Destroyer1 = new ship(2);
+				
+				
+				//creating the human player grid
+				for(int row = 0; row < boardH.getWidth(); row++) {
+					for(int col = 0; col < boardH.getHeight(); col++) {
+		
+						
+						//create alternating color grid
+						if((row+col)%2 == 0) boardH.getTile(row, col).setFill(Color.ROYALBLUE);
+						else {boardH.getTile(row, col).setFill(Color.BLUE);}
+						
+						int Fcol = col; 
+						int Frow = row;
+						
+						//event to add ships
+						boardH.getTile(row, col).setOnMouseClicked(event2 -> {RectangleClickShoot(event2, Frow, Fcol);
+								//when carrier is chosen
+								if(Carrier.isSelected()) {
+									//check if tile is valid for ship
+									if(ValidShip(Carrier1, Frow, Fcol)) {
+										System.out.println(boardH.getTile(Frow, Fcol).getX()+ boardH.getTile(Frow, Fcol).getY());
+										//if valid change color, set occupied and add location
+										boardH.getTile(Frow, Fcol).setFill(Color.DARKSLATEGRAY);
+										boardH.setTileOccupied(Frow, Fcol);
+										Carrier1.addLocation(boardH.getTile(Frow, Fcol));
+										//if ship is at max length disable ship button
+										if(Carrier1.getLocation().size() == Carrier1.getLength()) Carrier.setDisable(true);
+									}
+								}
+								//when battleship is chosen
+								else if(BattleShip.isSelected()) {
+									//check if tile is valid for ship
+									if(ValidShip(BattleShip1, Frow, Fcol)) {
+										System.out.println(boardH.getTile(Frow, Fcol).getX()+ boardH.getTile(Frow, Fcol).getY());
+										//if valid change color, set occupied and add location
+										boardH.getTile(Frow, Fcol).setFill(Color.DARKSLATEGRAY);
+										boardH.setTileOccupied(Frow, Fcol);
+										BattleShip1.addLocation(boardH.getTile(Frow, Fcol));
+										//if ship is at max length disable ship button
+										if(BattleShip1.getLocation().size() == BattleShip1.getLength()) BattleShip.setDisable(true);
+									}
+							
+								}
+								//when cruiser is chosen
+								else if(Cruiser.isSelected()) {
+									//check if tile is valid for ship
+									if(ValidShip(Cruiser1, Frow, Fcol)) {
+										System.out.println(boardH.getTile(Frow, Fcol).getX()+ boardH.getTile(Frow, Fcol).getY());
+										//if valid change color, set occupied and add location
+										boardH.getTile(Frow, Fcol).setFill(Color.DARKSLATEGRAY);
+										boardH.setTileOccupied(Frow, Fcol);
+										Cruiser1.addLocation(boardH.getTile(Frow, Fcol));
+										//if ship is at max length disable ship button
+										if(Cruiser1.getLocation().size() == Cruiser1.getLength()) Cruiser.setDisable(true);
+									}
+									
+								}
+								//when submarine is chosen
+								else if(Submarine.isSelected()) {
+									//check if tile is valid for ship
+									if(ValidShip(Submarine1, Frow, Fcol)) {
+										System.out.println(boardH.getTile(Frow, Fcol).getX()+ boardH.getTile(Frow, Fcol).getY());
+										//if valid change color, set occupied and add location
+										boardH.getTile(Frow, Fcol).setFill(Color.DARKSLATEGRAY);
+										boardH.setTileOccupied(Frow, Fcol);
+										Submarine1.addLocation(boardH.getTile(Frow, Fcol));
+										//if ship is at max length disable ship button
+										if(Submarine1.getLocation().size() == Submarine1.getLength()) Submarine.setDisable(true);
+									}
+									else Submarine.setDisable(true);
+								}
 
-					
-					consoleRunner temp = new consoleRunner();
-					//System.exit(0);
+								//when destroyer is chosen
+								else if(Destroyer.isSelected()) {
+									//check if tile is valid for ship
+									if(ValidShip(Destroyer1, Frow, Fcol)) {
+										System.out.println(boardH.getTile(Frow, Fcol).getX()+ boardH.getTile(Frow, Fcol).getY());
+										//if valid change color, set occupied and add location
+										boardH.getTile(Frow, Fcol).setFill(Color.DARKSLATEGRAY);
+										boardH.setTileOccupied(Frow, Fcol);
+										Destroyer1.addLocation(boardH.getTile(Frow, Fcol));
+										//if ship is at max length disable ship button
+										if(Destroyer1.getLocation().size() == Destroyer1.getLength()) Destroyer.setDisable(true);
+									}
+									
+
+								}
+								//confirm button is enabled when all ships are on the grid
+								if(Carrier.isDisabled() && BattleShip.isDisabled() && Cruiser.isDisabled() && Submarine.isDisabled() && Destroyer.isDisabled()) confirm.setDisable(false);
+								
+						});
+						//add to grid
+						HPgrid.add(boardH.getTile(row, col), col, row);
 					}
 				}
-				);
-			}
+				
+				//grid1 layout vbox
+				VBox grid1Layout = new VBox(10, humanplayerGrid, HPgrid, Carrier, BattleShip, Cruiser, Submarine, Destroyer, confirm);
+				grid1Layout.setAlignment(Pos.CENTER);
+				grid1Layout.setStyle("-fx-background-color: black; -fx-font-weight: bold");
+				grid1Layout.setPadding(new Insets(10));
+				
+				root = new Scene(grid1Layout);
+				
+				System.out.println(nameFirst + "'s Grid");
+				primaryStage.setScene(root);
+				
+				
+				confirm.setOnAction(ev -> {
+				
+					//confirm is disabled until grid is hit
+					confirm.setDisable(true);
+					
+					//creating grid for computer player board
+					GridPane ComputerGrid = new GridPane();
+					
+					for(int row = 0; row < boardC.getWidth(); row++) {
+						for(int col = 0; col < boardC.getHeight(); col++) {
 			
+							
+							//create alternating color grid
+							if((row+col)%2 == 0) boardC.getTile(row, col).setFill(Color.ALICEBLUE);
+							else {boardC.getTile(row, col).setFill(Color.AQUA);}
+							
+							int Fcol = col; 
+							int Frow = row;
+							
+							//mouse event to hit computer grid
+							boardC.getTile(row, col).setOnMouseClicked(event3 -> {RectangleClickShoot(event3, Frow, Fcol);
+											//check that tile wasn't already hit and allow only one tile to be hit
+											if(!boardC.getTile(Frow, Fcol).isHit() && confirm.isDisabled()) {
+												//when tile hit, set different color
+												boardC.getTile(Frow, Fcol).setFill(Color.LAWNGREEN);
+												boardC.setTileHit(Frow, Fcol);
+												confirm.setDisable(false);
+												
+											}
+							});
+							//add to grid
+							ComputerGrid.add(boardC.getTile(row, col), col, row);
+						}
+					}
+						
+						Label comp = new Label("Computer Grid");
+						comp.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 20pt");
+						
+						//human player grid display
+						VBox Hplayer = new VBox(10, humanplayerGrid, HPgrid);
+						Hplayer.setAlignment(Pos.CENTER);
+						
+						//computer player grid display
+						VBox Cplayer = new VBox(10, comp, ComputerGrid);
+						Cplayer.setAlignment(Pos.CENTER);
+						
+						//both displays together
+						HBox grids = new HBox(10, Hplayer, Cplayer);
+						
+						//layout and styling for the scene
+						VBox grid2Layout = new VBox(10, grids, confirm);
+						grid2Layout.setAlignment(Pos.CENTER);
+						grid2Layout.setStyle("-fx-background-color: black; -fx-font-weight: bold");
+						grid2Layout.setPadding(new Insets(10));
+						
+						//new scene displaying both grids
+						root = new Scene(grid2Layout);
+						primaryStage.setScene(root);
+						
+						
+					
+
+				});
+			
+				}
+				
 			}
 			);
+		
+		
+			
 			
 			
 			
@@ -323,26 +323,38 @@ public class Main extends Application {
 	}
 
 	public gameBoard getBoard1() {
-		return board1;
+		return boardH;
 	}
 
-	public void setBoard1(gameBoard board1) {
-		this.board1 = board1;
+	public void setBoard1(gameBoard boardH) {
+		this.boardH = boardH;
 	}
-	
-	private void RectangleClickShoot(MouseEvent event, int col, int row) {
-	    int x = col;
-	    int y = row;
+	/**
+	 * Event for clicking tile
+	 * @param event - clicking tile
+	 * @param col
+	 * @param row
+	 */
+	private void RectangleClickShoot(MouseEvent event, int row, int col) {
+	    int x = row;
+	    int y = col;
 	    System.out.println("(" + x + ", " + y + ")");
 	   
 	    // Do something with the coordinates here
 	}
+	/**
+	 * checks that the selected tile is ok to add to ship
+	 * @param ship1
+	 * @param row
+	 * @param col
+	 * @return whether the tile makes a valid ship
+	 */
 	public boolean ValidShip(ship ship1, int row, int col) {
 			//checks ship length is not complete
 			if(ship1.getLocation().size() == ship1.getLength()) return false;
 		
 			//check if tile is occupied
-			if(board1.getTileisOccupied(row, col)) return false;
+			if(boardH.getTileisOccupied(row, col)) return false;
 			
 			//if only 1 tile 
 			if(ship1.getLocation().size()==1) {
