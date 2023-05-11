@@ -124,4 +124,12 @@ public class gameBoard {
 		System.out.println("All ships are sunk! " + ifLost.getName() + " has lost");
 		return true;
 	}
+	
+	public boolean validHit(int x, int y) {
+		if (board[x][y].isHit()) {
+			return false;
+		}
+		return true;
+		
+	}
 }

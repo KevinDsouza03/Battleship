@@ -86,17 +86,15 @@ public class consoleRunner {
 	
 	public void humanvsComputer(humanPlayer p1, gameBoard p1Board, computerPlayer p2, gameBoard p2Board,int x, int y) {
 		Random rand = new Random();
-		for (int i = 0; i < 50; i++) {
-			System.out.println("Player1 Board");
-			p1Board.printBoard();
-			System.out.println("Player2 Board");
-			p2Board.printBoard();
-			System.out.println("Player1 First Move. Prompting user to play");
-			p1.fire(x, y, p2Board);
-			System.out.println("Player 1 fired");
-			System.out.println("Player2 play");
-			p2.fire(rand.nextInt(10), rand.nextInt(10), p1Board);
-		}
+		System.out.println("Player1 Board");
+		p1Board.printBoard();
+		System.out.println("Player2 Board");
+		p2Board.printBoard();
+		System.out.println("Player1 First Move. Prompting user to play");
+		p1.fire(x, y, p2Board);
+		System.out.println("Player 1 fired");
+		System.out.println("Player2 play");
+		p2.fire(rand.nextInt(10), rand.nextInt(10), p1Board);
 		System.out.println("Player1 After Fire");
 		p1Board.printBoard();
 		System.out.println("Player2 After Fire");

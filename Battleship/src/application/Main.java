@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import java.util.Random;
 
 
 public class Main extends Application {
@@ -30,7 +31,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			
+			Random rand = new Random();
 			computerPlayer generator = new computerPlayer();
 			computerPlayer computer = generator.generatePlayer();
 			
@@ -285,6 +286,8 @@ public class Main extends Application {
 
 					System.out.println("Comp Player");
 					boardC.printBoard();
+					System.out.println("Human Player");
+					boardH.printBoard();
 
 					for(int row = 0; row < boardC.getWidth(); row++) {
 						for(int col = 0; col < boardC.getHeight(); col++) {
@@ -300,21 +303,31 @@ public class Main extends Application {
 							//mouse event to hit computer grid
 							boardC.getTile(row, col).setOnMouseClicked(event3 -> {RectangleClickShoot(event3);
 											//check that tile wasn't already hit and allow only one tile to be hit
-											if(!boardC.getTile(Frow, Fcol).isHit() && confirm.isDisabled()) {
+											if(boardC.validHit(Frow, Fcol) && confirm.isDisable()) {
 												//when tile hit, set different color
+												human.fire(Frow, Fcol, boardC);
 												if(boardC.getTileisOccupied(Frow, Fcol)) {
 													boardC.getTile(Frow, Fcol).setFill(Color.RED);
 												}
 												else{
 													boardC.getTile(Frow, Fcol).setFill(Color.LAWNGREEN);
 												}
-												boardC.setTileHit(Frow, Fcol);
-												confirm.setDisable(false);
 												
+												//boardC.setTileHit(Frow, Fcol);
+												confirm.setDisable(false);
+												computer.fire(rand.nextInt(10),rand.nextInt(10) , boardH);
+									
 											}
 							});
+							if(boardC.getTile(row, col).isHit()) {	boardC.getTile(Frow, Fcol).setFill(Color.RED);}
 							//add to grid
 							ComputerGrid.add(boardC.getTile(row, col), col, row);
+							if (boardC.checkWin(computer)) {
+								//if computer lost, display human win
+							}
+							else if (boardH.checkWin(human)) {
+								//if human lost, display computer win
+							}
 						}
 					}
 					
