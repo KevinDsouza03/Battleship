@@ -31,6 +31,10 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			
+			computerPlayer generator = new computerPlayer();
+			computerPlayer computer = generator.generatePlayer();
+			
+			boardC = new gameBoard(computer);
 			//set title
 			primaryStage.setTitle("BATTLESHIP");
 			
@@ -260,25 +264,28 @@ public class Main extends Application {
 					ship Destroyer2 = new ship(2);
 					
 					//Create fleet for human player
-					ship fleetC[] = {Carrier1, BattleShip1, Cruiser1, Submarine1, Destroyer1};
-					
-					for (int j = 0; j < 5; j++) {
-						for (int i = 0; i < fleetC[i].getLength(); i++) {
-							tile tempTile = new tile(j,j+i);
-							tempTile.updateOccupied(true);
-							boardC.setTileOccupied(i, j);
-							fleetC[j].addLocation(tempTile);
-						
-						}
-					}
-					
-					
-					
-					//Create human player
-					player computer = new computerPlayer("computer", fleetC);
-					
-						
-					
+//					ship fleetC[] = {Carrier1, BattleShip1, Cruiser1, Submarine1, Destroyer1};
+//					
+//					for (int j = 0; j < 5; j++) {
+//						for (int i = 0; i < fleetC[i].getLength(); i++) {
+//							tile tempTile = new tile(j,j+i);
+//							tempTile.updateOccupied(true);
+//							boardC.setTileOccupied(i, j);
+//							fleetC[j].addLocation(tempTile);
+//						
+//						}
+//					}
+//					
+//					
+//					
+//					//Create human player
+//					player computer = new computerPlayer("computer", fleetC);
+//					
+//						
+
+					System.out.println("Comp Player");
+					boardC.printBoard();
+
 					for(int row = 0; row < boardC.getWidth(); row++) {
 						for(int col = 0; col < boardC.getHeight(); col++) {
 			
