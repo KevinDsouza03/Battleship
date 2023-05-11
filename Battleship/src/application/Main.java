@@ -319,18 +319,19 @@ public class Main extends Application {
 									
 											}
 							});
-							if(boardC.getTile(row, col).isHit()) {	boardC.getTile(Frow, Fcol).setFill(Color.RED);}
+							if(boardC.getTile(row, col).isHit() && boardC.getTile(row, col).isOccupied()) {	boardC.getTile(Frow, Fcol).setFill(Color.RED);}
+							else if(boardC.getTile(row, col).isHit()) boardC.getTile(Frow, Fcol).setFill(Color.LAWNGREEN);
 							//add to grid
 							ComputerGrid.add(boardC.getTile(row, col), col, row);
-							if (boardC.checkWin(computer)) {
-								//if computer lost, display human win
-							}
-							else if (boardH.checkWin(human)) {
-								//if human lost, display computer win
-							}
+							
 						}
 					}
-					
+					if (boardC.checkWin(computer)) {
+						//if computer lost, display human win
+					}
+					else if (boardH.checkWin(human)) {
+						//if human lost, display computer win
+					}
 					
 				
 						Label comp = new Label("Computer Grid");
