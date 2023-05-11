@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -18,8 +17,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.KeyCode;
 
 
 public class Main extends Application {
@@ -86,6 +83,7 @@ public class Main extends Application {
 				String nameFirst;
 				nameFirst = name.getText();
 				
+				
 				Label humanplayerGrid = new Label(nameFirst + "'s Grid");
 				humanplayerGrid.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 20pt");
 				
@@ -124,7 +122,7 @@ public class Main extends Application {
 				Destroyer.setToggleGroup(radioGroup2);
 				Carrier.setSelected(true);
 				
-				//creating the ships
+				//creating the ships for human player
 				ship Carrier1 = new ship(5);
 				ship BattleShip1 = new ship(4);
 				ship Cruiser1 = new ship(3);
@@ -145,7 +143,7 @@ public class Main extends Application {
 						int Frow = row;
 						
 						//event to add ships
-						boardH.getTile(row, col).setOnMouseClicked(event2 -> {RectangleClickShoot(event2, Frow, Fcol);
+						boardH.getTile(row, col).setOnMouseClicked(event2 -> {RectangleClickShoot(event2);
 								//when carrier is chosen
 								if(Carrier.isSelected()) {
 									//check if tile is valid for ship
@@ -201,7 +199,6 @@ public class Main extends Application {
 									}
 									else Submarine.setDisable(true);
 								}
-
 								//when destroyer is chosen
 								else if(Destroyer.isSelected()) {
 									//check if tile is valid for ship
@@ -215,7 +212,6 @@ public class Main extends Application {
 										if(Destroyer1.getLocation().size() == Destroyer1.getLength()) Destroyer.setDisable(true);
 									}
 									
-
 								}
 								//confirm button is enabled when all ships are on the grid
 								if(Carrier.isDisabled() && BattleShip.isDisabled() && Cruiser.isDisabled() && Submarine.isDisabled() && Destroyer.isDisabled()) confirm.setDisable(false);
@@ -225,6 +221,12 @@ public class Main extends Application {
 						HPgrid.add(boardH.getTile(row, col), col, row);
 					}
 				}
+				
+				//Create fleet for human player
+				ship fleetH[] = {Carrier1, BattleShip1, Cruiser1, Submarine1, Destroyer1};
+				
+				//Create human player
+				player human = new humanPlayer(nameFirst, fleetH);
 				
 				//grid1 layout vbox
 				VBox grid1Layout = new VBox(10, humanplayerGrid, HPgrid, Carrier, BattleShip, Cruiser, Submarine, Destroyer, confirm);
@@ -238,6 +240,9 @@ public class Main extends Application {
 				primaryStage.setScene(root);
 				
 				
+				
+				
+				
 				confirm.setOnAction(ev -> {
 				
 					//confirm is disabled until grid is hit
@@ -246,23 +251,56 @@ public class Main extends Application {
 					//creating grid for computer player board
 					GridPane ComputerGrid = new GridPane();
 					
+					
+					//creating the ships for computer player
+					ship Carrier2 = new ship(5);
+					ship BattleShip2 = new ship(4);
+					ship Cruiser2 = new ship(3);
+					ship Submarine2 = new ship(3);
+					ship Destroyer2 = new ship(2);
+					
+					//Create fleet for human player
+					ship fleetC[] = {Carrier1, BattleShip1, Cruiser1, Submarine1, Destroyer1};
+					
+					for (int j = 0; j < 5; j++) {
+						for (int i = 0; i < fleetC[i].getLength(); i++) {
+							tile tempTile = new tile(j,j+i);
+							tempTile.updateOccupied(true);
+							boardC.setTileOccupied(i, j);
+							fleetC[j].addLocation(tempTile);
+						
+						}
+					}
+					
+					
+					
+					//Create human player
+					player computer = new computerPlayer("computer", fleetC);
+					
+						
+					
 					for(int row = 0; row < boardC.getWidth(); row++) {
 						for(int col = 0; col < boardC.getHeight(); col++) {
 			
 							
 							//create alternating color grid
 							if((row+col)%2 == 0) boardC.getTile(row, col).setFill(Color.ALICEBLUE);
-							else {boardC.getTile(row, col).setFill(Color.AQUA);}
+							else {boardC.getTile(row, col).setFill(Color.TURQUOISE);}
 							
 							int Fcol = col; 
 							int Frow = row;
 							
 							//mouse event to hit computer grid
-							boardC.getTile(row, col).setOnMouseClicked(event3 -> {RectangleClickShoot(event3, Frow, Fcol);
+							boardC.getTile(row, col).setOnMouseClicked(event3 -> {RectangleClickShoot(event3);
 											//check that tile wasn't already hit and allow only one tile to be hit
 											if(!boardC.getTile(Frow, Fcol).isHit() && confirm.isDisabled()) {
 												//when tile hit, set different color
-												boardC.getTile(Frow, Fcol).setFill(Color.LAWNGREEN);
+												if(boardC.getTileisOccupied(Frow, Fcol)) {
+													boardC.getTile(Frow, Fcol).setFill(Color.RED);
+												}
+												else{
+													boardC.getTile(Frow, Fcol).setFill(Color.LAWNGREEN);
+												}
 												boardC.setTileHit(Frow, Fcol);
 												confirm.setDisable(false);
 												
@@ -272,7 +310,9 @@ public class Main extends Application {
 							ComputerGrid.add(boardC.getTile(row, col), col, row);
 						}
 					}
-						
+					
+					
+				
 						Label comp = new Label("Computer Grid");
 						comp.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 20pt");
 						
@@ -285,7 +325,7 @@ public class Main extends Application {
 						Cplayer.setAlignment(Pos.CENTER);
 						
 						//both displays together
-						HBox grids = new HBox(10, Hplayer, Cplayer);
+						HBox grids = new HBox(20, Hplayer, Cplayer);
 						
 						//layout and styling for the scene
 						VBox grid2Layout = new VBox(10, grids, confirm);
@@ -299,15 +339,16 @@ public class Main extends Application {
 						
 						
 					
-
+					
 				});
+				
 			
 				}
 				
 			}
 			);
 		
-		
+			
 			
 			
 			
@@ -335,12 +376,9 @@ public class Main extends Application {
 	 * @param col
 	 * @param row
 	 */
-	private void RectangleClickShoot(MouseEvent event, int row, int col) {
-	    int x = row;
-	    int y = col;
-	    System.out.println("(" + x + ", " + y + ")");
-	   
-	    // Do something with the coordinates here
+	private void RectangleClickShoot(MouseEvent event) {
+	    
+	    
 	}
 	/**
 	 * checks that the selected tile is ok to add to ship
