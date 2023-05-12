@@ -139,8 +139,8 @@ public class computerPlayer extends player{
 		//computer will be using prior hits to determine if they were good or not.
 		//first, computer check if our last hit was good and with our x,y.
 		played.add(new Pair<Integer,Integer>(x,y));
-		attack.setTileHit(x, y);
-		if (attack.getTileisOccupied(x, y)) {
+		attack.getTile(x, y).updateHit(true);;
+		if (attack.getTile(x, y).isOccupied()) {
 			//if we hit a ship, a good hit. add these now to the arrayList for next iteration
 			System.out.println("Good shot Computer. Adding adjacency.");
 			if (x+1 > 0 && y > 0 && !played.contains(new Pair<Integer,Integer>(x+1,y))) {
