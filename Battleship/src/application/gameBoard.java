@@ -46,7 +46,7 @@ public class gameBoard {
 	    }
 	    for (ship s : toCheck) {
 	        for (tile t : s.getLocation()) {;
-	           	this.setTileOccupied(t.x, t.y);
+	           	this.getTile(t.x, t.y).updateOccupied(true);;
 	        }
 	    }
 	}
@@ -62,15 +62,6 @@ public class gameBoard {
 	 * @param n
 	 * @return
 	 */
-	public boolean getTileisHit(int m, int n) { return board[m][n].isHit(); }
-	/***
-	 * returns user specified index occupied value
-	 * @param m
-	 * @param n
-	 * @return
-	 */
-	public boolean getTileisOccupied(int m, int n) { return board[m][n].isOccupied(); }
-
 
 	public int getHeight() {return gameBoard.height;}
 	
@@ -80,11 +71,11 @@ public class gameBoard {
 		String temp = "";
 		for(int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
-				if (this.getTileisOccupied(i, j) && this.getTileisHit(i, j)) {
+				if (this.getTile(i, j).isOccupied() && this.getTile(i, j).isHit()) {
 					temp = "* "; // is the space occupied and not hit?
 				}
-				else if (this.getTileisOccupied(i,j)) {temp = "O ";}
-				else if (this.getTileisHit(i, j)) {
+				else if (this.getTile(i,j).isOccupied()) {temp = "O ";}
+				else if (this.getTile(i, j).isHit()) {
 					temp = "X ";
 				}
 				else {
@@ -95,32 +86,24 @@ public class gameBoard {
 			System.out.print("\n");
 		}
 	}
-	public void setTileOccupied(int m, int n) {
-		board[m][n].updateOccupied(true);
-	}
-	public void setTileHit(int m, int n) {
-		board[m][n].updateHit(true);
-	}
+	
 	/***
 	 * Function to check if all ships are sunk for a given player. Compares board to actual player.
 	 * @param ifLost
 	 * @return
 	 */
 	public boolean checkWin(player ifLost) { //function essentially checks if I have lost by seeing if all my occupied are hit.
-		ship toCheck[] = new ship[5];
-		System.arraycopy(ifLost.getFleet(), 0, toCheck, 0, 5);
-		// now we have our copy of the fleet and iterate through it all to check for a win.
-		for (ship shipLocationArray : toCheck) { // get our locationArray from the players ship(s)
-			for (tile shipLocation : shipLocationArray.getLocation()) { // check each location for being hit on our board.
-				if (this.getTileisHit(shipLocation.x, shipLocation.y)) {
-					continue;
-				}
-				else {
-					System.out.println("Not all ships are sunk");
-					return false;
-				}
+		//iterate through fleet to check for a win.
+		for (ship shipLocationArray : ifLost.getFleet()) { // get our locationArray from the players ship(s)
+			if(shipLocationArray.isSunk()) {
+				continue;
+			}
+			else {
+				System.out.println("Not all ships are sunk");
+				return false;
 			}
 		}
+		
 		System.out.println("All ships are sunk! " + ifLost.getName() + " has lost");
 		return true;
 	}
