@@ -19,8 +19,7 @@ public abstract class player {
 	}
 	
 	public player(String n, ship[] f) {
-		fleet = new ship[5];
-		System.arraycopy(f, 0, fleet, 0, 5);
+		fleet = f;
 		name = n;
 	}
 	
@@ -42,7 +41,9 @@ public abstract class player {
 	public ship[] getFleet() {
 		return fleet;
 	}
-	
+	public void setFleet(ship []s) {
+		fleet = s;
+	}
 	
 	/***
 	 * function to be implemented as to how a player fires a shot.
