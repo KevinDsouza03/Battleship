@@ -6,7 +6,6 @@ public class ship {
 	//size and location of ship
 	private int length;
 	private ArrayList<tile> location;
-	//private tile shipLoc[];
 	
 	/**
 	 * constructor that sets the size and location of the ship
@@ -24,8 +23,8 @@ public class ship {
 	 * @return whether ship sunk
 	 */
 	public boolean isSunk() {
-		for(int i = 0; i < length; i++){
-			if(!location.get(i).isHit()) return false;
+		for(tile t: location){
+			if(!t.isHit()) return false;
 		}
 		return true;
 	}
