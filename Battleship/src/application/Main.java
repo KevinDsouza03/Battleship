@@ -305,6 +305,7 @@ public class Main extends Application {
 												
 												
 												//firing at human player board
+												computer.updateMove(x, y);
 												computer.fire(x, y, boardH);
 												if(boardH.getTile(x, y).isHit() && boardH.getTile(x, y).isOccupied()) {
 													boardH.getTile(x, y).setFill(Color.RED);

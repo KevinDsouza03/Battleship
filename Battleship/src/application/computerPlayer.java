@@ -23,6 +23,14 @@ public class computerPlayer extends player{
 	}
 	
 	
+	
+    public void updateMove(int x, int y) {
+        if (!playList.isEmpty()) {
+            Pair<Integer, Integer> lastMove = playList.remove(playList.size()-1);
+            x = lastMove.getKey();
+            y = lastMove.getValue();
+        }
+    }
 	/***
 	 * This function works as a helper function to generate random ships and populate the computerPlayer calling it.
 	 * It works by trying to place a ship 100 times (which will almost always result in placement), and then
@@ -32,134 +40,137 @@ public class computerPlayer extends player{
 	 * continue 100 times.
 	 * @return
 	 */
-	public computerPlayer generatePlayer() {
-	    // Generate fleet
-	    ship carrier = new ship(5);
-	    ship battleship = new ship(4);
-	    ship cruiser = new ship(3);
-	    ship submarine = new ship(3);
-	    ship destroyer = new ship(2);
-	    ship[] ships = {carrier, battleship, cruiser, submarine, destroyer};
+    public computerPlayer generatePlayer() {
+        // Generate fleet
+        ship carrier = new ship(5);
+        ship battleship = new ship(4);
+        ship cruiser = new ship(3);
+        ship submarine = new ship(3);
+        ship destroyer = new ship(2);
+        ship[] ships = {carrier, battleship, cruiser, submarine, destroyer};
 
-	    ArrayList<tile> occupiedTiles = new ArrayList<tile>();
+        ArrayList<tile> occupiedTiles = new ArrayList<tile>();
 
-	    Random rand = new Random();
+        Random rand = new Random();
 
-	    for (ship currShip : ships) {
-	        boolean fits = false;
-	        int attempts = 0;
+        for (ship currShip : ships) {
+            boolean fits = false;
+            int attempts = 0;
 
-	        while (!fits && attempts < 100) {
-	            attempts++;
+            while (!fits && attempts < 100) {
+                attempts++;
 
-	            ArrayList<tile> potentialTiles = new ArrayList<tile>();
+                ArrayList<tile> potentialTiles = new ArrayList<tile>();
 
-	            // Place length 2 ships near the edges
-	            if (currShip.getLength() == 2) {
-	                int x, y;
-	                boolean horizontal;
+                // Place length 2 ships near the edges
+                if (currShip.getLength() == 2) {
+                    int x, y;
+                    boolean horizontal;
 
-	                if (rand.nextBoolean()) {
-	                    // Place horizontally on top or bottom row
-	                    y = rand.nextInt(2) * 9;
-	                    x = rand.nextInt(10 - currShip.getLength() + 1);
-	                    horizontal = true;
-	                } else {
-	                    // Place vertically on left or right column
-	                    x = rand.nextInt(2) * 9;
-	                    y = rand.nextInt(10 - currShip.getLength() + 1);
-	                    horizontal = false;
-	                }
+                    if (rand.nextBoolean()) {
+                        // Place horizontally on top or bottom row
+                        y = rand.nextInt(2) * 9;
+                        x = rand.nextInt(10 - currShip.getLength() + 1);
+                        horizontal = true;
+                    } else {
+                        // Place vertically on left or right column
+                        x = rand.nextInt(2) * 9;
+                        y = rand.nextInt(10 - currShip.getLength() + 1);
+                        horizontal = false;
+                    }
 
-	                for (int i = 0; i < currShip.getLength(); i++) {
-	                    if (horizontal) {
-	                        potentialTiles.add(new tile(x + i, y));
-	                    } else {
-	                        potentialTiles.add(new tile(x, y + i));
-	                    }
-	                }
-	            } else {
-	                // Place length 3 ships near the middle
-	                int x = rand.nextInt(6) + 2;
-	                int y = rand.nextInt(6) + 2;
-	                boolean horizontal = rand.nextBoolean();
+                    for (int i = 0; i < currShip.getLength(); i++) {
+                        if (horizontal) {
+                            potentialTiles.add(new tile(x + i, y));
+                        } else {
+                            potentialTiles.add(new tile(x, y + i));
+                        }
+                    }
+                } else {
+                    // Place length 3 ships near the middle
+                    int x = rand.nextInt(6) + 2;
+                    int y = rand.nextInt(6) + 2;
+                    boolean horizontal = rand.nextBoolean();
 
-	                for (int i = 0; i < currShip.getLength(); i++) {
-	                    if (horizontal) {
-	                        potentialTiles.add(new tile(x + i, y));
-	                    } else {
-	                        potentialTiles.add(new tile(x, y + i));
-	                    }
-	                }
-	            }
+                    for (int i = 0; i < currShip.getLength(); i++) {
+                        if (horizontal) {
+                            potentialTiles.add(new tile(x + i, y));
+                        } else {
+                            potentialTiles.add(new tile(x, y + i));
+                        }
+                    }
+                }
 
-	            boolean tileConflict = false;
-	            for (tile t : potentialTiles) {
-	                for (tile occupiedTile : occupiedTiles) {
-	                    if (t.x == occupiedTile.x && t.y == occupiedTile.y) {
-	                        tileConflict = true;
-	                        break;
-	                    }
-	                }
-	                if (tileConflict) {
-	                    break;
-	                }
-	            }
+                // Check if all potential tiles are within the grid boundaries
+                boolean outOfBounds = false;
+                for (tile t : potentialTiles) {
+                    if (t.x < 0 || t.x >= 10 || t.y < 0 || t.y >= 10) {
+                        outOfBounds = true;
+                        break;
+                    }
+                }
+                if (outOfBounds) {
+                    continue;
+                }
 
-	            if (!tileConflict) {
-	                for (tile t : potentialTiles) {
-	                    currShip.addLocation(t);
-	                    occupiedTiles.add(t);
-	                }
-	                fits = true;
-	            }
-	        }
-	    }
+                boolean tileConflict = false;
+                for (tile t : potentialTiles) {
+                    for (tile occupiedTile : occupiedTiles) {
+                        if (t.x == occupiedTile.x && t.y == occupiedTile.y) {
+                            tileConflict = true;
+                            break;
+                        }
+                    }
+                    if (tileConflict) {
+                        break;
+                    }
+                }
 
-	    // Create the computer player and return it
-	    computerPlayer generatedPlayer = new computerPlayer("Computer", ships);
-	    return generatedPlayer;
-	}
+                if (!tileConflict) {
+                    for (tile t : potentialTiles) {
+                        currShip.addLocation(t);
+                        occupiedTiles.add(t);
+                    }
+                    fits = true;
+                }
+            }
+        }
+        for (ship t : ships) {
+            for (tile d : t.getLocation()) {
+                System.out.println(t.getLength() + " (" + d.x + ", " + d.y + ")");
+            }
+        }
+        // Create the computer player and return it
+        computerPlayer generatedPlayer = new computerPlayer("Computer", ships);
+        return generatedPlayer;
+    }
 
 	
 	@Override
 	/***
 	 * As this is the computer player, it makes informed decisions based on the last shot. If we hit, add adjacent shots and do not repeat already put shots.
 	 */
-	public boolean fire(int x, int y, gameBoard attack)  {
-		//basically, if we already have a move in the list, theres a better move to do so do this move instead of the random x y passed in
-		//computer will be using prior hits to determine if they were good or not.
-		//first, computer check if our last hit was good and with our x,y.
-		played.add(new Pair<Integer,Integer>(x,y));
-		attack.getTile(x, y).updateHit(true);;
-		if (attack.getTile(x, y).isOccupied()) {
-			//if we hit a ship, a good hit. add these now to the arrayList for next iteration
-			System.out.println("Good shot Computer. Adding adjacency.");
-			if (x+1 > 0 && y > 0 && !played.contains(new Pair<Integer,Integer>(x+1,y)) && (x+1 < 10 && y < 10)) {
-				playList.add(new Pair<Integer,Integer>(x+1,y));
-			}
-			if (x-1 > 0 && y > 0 && !played.contains(new Pair<Integer,Integer>(x-1,y)) && (x-1 < 10 && y < 10)) {
-				playList.add(new Pair<Integer,Integer>(x-1,y));
-			}
-			if (x > 0 && y+1 > 0 && !played.contains(new Pair<Integer,Integer>(x,y+1)) && (x < 10 && y+1 < 10)) {
-				playList.add(new Pair<Integer,Integer>(x,y+1));
-			}
-			if (x > 0 && y-1 > 0 && !played.contains(new Pair<Integer,Integer>(x,y-1)) && (x < 10 && y-1 < 10)) { 
-				playList.add(new Pair<Integer,Integer>(x,y-1));
-			}
-			return true;
-		}
-		//empty move so we say its empty/bad move.
-		System.out.println("Bad shot");
-		return false;	
-	}
-
-	public void updateMove(int x, int y) {
-		if (!playList.isEmpty()) {x = playList.get(playList.size()-1).getKey();
-		y = playList.get(playList.size()-1).getValue();
-		playList.remove(playList.get(playList.size()-1)); //pop from stack
-		}
-	}
-
+	 public boolean fire(int x, int y, gameBoard attack) {
+        played.add(new Pair<Integer,Integer>(x,y));
+        attack.getTile(x, y).updateHit(true);;
+        if (attack.getTile(x, y).isOccupied()) {
+            System.out.println("Good shot Computer. Adding adjacency.");
+            if (x+1 > 0 && y > 0 && !played.contains(new Pair<Integer,Integer>(x+1,y)) && (x+1 < 10 && y < 10)) {
+                playList.add(new Pair<Integer,Integer>(x+1,y));
+            }
+            if (x-1 > 0 && y > 0 && !played.contains(new Pair<Integer,Integer>(x-1,y)) && (x-1 < 10 && y < 10)) {
+                playList.add(new Pair<Integer,Integer>(x-1,y));
+            }
+            if (x > 0 && y+1 > 0 && !played.contains(new Pair<Integer,Integer>(x,y+1)) && (x < 10 && y+1 < 10)) {
+                playList.add(new Pair<Integer,Integer>(x,y+1));
+            }
+            if (x > 0 && y-1 > 0 && !played.contains(new Pair<Integer,Integer>(x,y-1)) && (x < 10 && y-1 < 10)) { 
+                playList.add(new Pair<Integer,Integer>(x,y-1));
+            }
+            return true;
+        }
+        System.out.println("Bad shot");
+        return false;
+    }
 }
 
