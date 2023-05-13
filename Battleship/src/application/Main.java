@@ -298,9 +298,20 @@ public class Main extends Application {
 												int x = rand.nextInt(10);
 												int y = rand.nextInt(10);
 												
+												while(boardH.getTile(x, y).isHit()) {
+													x = rand.nextInt(10);
+													y = rand.nextInt(10);
+												}
+												
+												
 												//firing at human player board
 												computer.fire(x, y, boardH);
-												if(boardH.getTile(x, y).isHit()) boardH.getTile(x, y).setFill(Color.KHAKI);
+												if(boardH.getTile(x, y).isHit() && boardH.getTile(x, y).isOccupied()) {
+													boardH.getTile(x, y).setFill(Color.RED);
+												}
+												else if(boardH.getTile(x, y).isHit()) {
+													boardH.getTile(x, y).setFill(Color.KHAKI);
+												}
 												
 												//check if any human player ship has sunk
 												for(ship s : human.getFleet()){
@@ -309,10 +320,11 @@ public class Main extends Application {
 														for(tile t: s.getLocation()) {
 															boardH.getTile(t.x, t.y).setFill(Color.FIREBRICK);
 														}
-														
 													}
 													
 												}
+												
+												
 									
 												confirm.setDisable(false);
 															
@@ -325,9 +337,20 @@ public class Main extends Application {
 							if(boardC.getTile(row, col).isHit() && boardC.getTile(row, col).isOccupied()) {	boardC.getTile(Frow, Fcol).setFill(Color.RED);}
 							else if(boardC.getTile(row, col).isHit()) boardC.getTile(Frow, Fcol).setFill(Color.KHAKI);
 							
+							if (boardC.checkWin(computer)) {
+								//if computer lost, display human win
+							}
+							else if (boardH.checkWin(human)) {
+								//if human lost, display computer win
+								Label computerWinner = new Label("Computer has won!" + nameFirst + "has lost!");
+								computerWinner.setStyle("-fx-background-color: black; -fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 50pt");
+								root = new Scene(computerWinner);
+								primaryStage.setScene(root);
+							}
+							
 							//check if ship has sunk
 							for(ship s : computer.getFleet()){
-								System.out.println(s.getLength());
+								
 								if(s.isSunk()) {
 									for(tile t: s.getLocation()) {
 										boardC.getTile(t.x, t.y).setFill(Color.GRAY);
@@ -346,12 +369,7 @@ public class Main extends Application {
 					}
 					
 					
-					if (boardC.checkWin(computer)) {
-						//if computer lost, display human win
-					}
-					else if (boardH.checkWin(human)) {
-						//if human lost, display computer win
-					}
+					
 					
 				
 						Label comp = new Label("Computer Grid");
