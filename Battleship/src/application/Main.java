@@ -287,10 +287,6 @@ public class Main extends Application {
 					Carrier.setToggleGroup(specialMoves);
 					BattleShip.setToggleGroup(specialMoves);
 					
-					//create special moves
-					specialMove special1 = new rowAttack();
-					specialMove special2 = new bomb();
-					
 					
 
 					for(int row = 0; row < boardC.getWidth(); row++) {
@@ -309,23 +305,29 @@ public class Main extends Application {
 							//mouse event to hit computer grid
 							boardC.getTile(row, col).setOnMouseClicked(event3 -> {RectangleClickShoot(event3);
 							
-							if(rowAttack.isSelected() && confirm.isDisable()) {
+							//checking if row attack is selected and that it is only used once
+							if(rowAttack.isSelected() && human.getRowAUsed() == false && confirm.isDisable()) {
 								boardC.getTile(Frow, Fcol).setFill(Color.AQUA);
-								special1.specialAttack(Frow, Fcol, boardC);
+								human.getRowA().specialAttack(Frow, Fcol, boardC);
+								human.setRowAUsed(true);
 								rowAttack.setDisable(true);
+								bomb.setDisable(true);//only one move a turn
 								confirm.setDisable(false);
 								
 							}
-							else if(bomb.isSelected() && confirm.isDisable()) {
+							//checking if row attack is selected and that it is only used once
+							else if(bomb.isSelected() && human.getBombUsed() == false && confirm.isDisable()) {
 								boardC.getTile(Frow, Fcol).setFill(Color.AQUA);
-								special2.specialAttack(Frow, Fcol, boardC);
+								human.getBomb().specialAttack(Frow, Fcol, boardC);
+								human.setBombUsed(true);
+								rowAttack.setDisable(true);//only one move a turn
 								bomb.setDisable(true);
 								confirm.setDisable(false);
 								
 							}
 							
 											//check that tile wasn't already hit and allow only one tile to be hit
-							else if(boardC.validHit(Frow, Fcol) && confirm.isDisable()) {
+							if(boardC.validHit(Frow, Fcol) && confirm.isDisable()) {
 												//when tile hit, set different color
 												human.fire(Frow, Fcol, boardC);
 												
@@ -380,9 +382,7 @@ public class Main extends Application {
 					}
 					//check if any human player ship has sunk
 					for(ship s : human.getFleet()){
-						for(tile t : s.getLocation()) {
-							System.out.println(t.x + "," + t.y + " human" + t.isHit());
-						}
+						
 						if(s.isSunk(boardH)) {
 							for(tile t: s.getLocation()) {
 								boardH.getTile(t.x, t.y).setFill(Color.FIREBRICK);
@@ -393,9 +393,7 @@ public class Main extends Application {
 					
 					//check if computer ship has sunk
 					for(ship s1 : computer.getFleet()){
-						for(tile t : s1.getLocation()) {
-							System.out.println(t.x +","+ t.y + " comp" + t.isHit());
-						}
+						
 						
 						if(s1.isSunk(boardC)) {
 							for(tile t: s1.getLocation()) {
@@ -410,8 +408,13 @@ public class Main extends Application {
 					
 					
 					
-						
-					
+						//disable buttons when special moves are already finished
+						if(human.getBombUsed() == true) {
+							bomb.setDisable(true);
+						}
+						if(human.getRowAUsed()) {
+							rowAttack.setDisable(true);
+						}
 						Label comp = new Label("Computer Grid");
 						comp.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 20pt");
 						
