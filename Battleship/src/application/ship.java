@@ -22,9 +22,12 @@ public class ship {
 	 * checks if ship is sunk or not
 	 * @return whether ship sunk
 	 */
-	public boolean isSunk() {
+	public boolean isSunk(gameBoard checkAgainst) {
 		for(tile t: location){
-			if(!t.isHit()) return false;
+			if(!checkAgainst.getTile(t.x, t.y).isHit()) { return false;} // if isnt hit, we arent sunk
+			else {
+				t.updateHit(true); //else, update our own tile to ensure
+			}
 		}
 		return true;
 	}

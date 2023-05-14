@@ -342,7 +342,7 @@ public class Main extends Application {
 						for(tile t : s.getLocation()) {
 							System.out.println(t.x + "," + t.y + " human" + t.isHit());
 						}
-						if(s.isSunk()) {
+						if(s.isSunk(boardH)) {
 							for(tile t: s.getLocation()) {
 								boardH.getTile(t.x, t.y).setFill(Color.FIREBRICK);
 							}
@@ -356,7 +356,7 @@ public class Main extends Application {
 							System.out.println(t.x +","+ t.y + " comp" + t.isHit());
 						}
 						
-						if(s1.isSunk()) {
+						if(s1.isSunk(boardC)) {
 							for(tile t: s1.getLocation()) {
 								boardC.getTile(t.x, t.y).setFill(Color.FIREBRICK);
 							}

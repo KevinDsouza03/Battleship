@@ -95,7 +95,7 @@ public class gameBoard {
 	public boolean checkWin(player ifLost) { //function essentially checks if I have lost by seeing if all my occupied are hit.
 		//iterate through fleet to check for a win.
 		for (ship shipLocationArray : ifLost.getFleet()) { // get our locationArray from the players ship(s)
-			if(shipLocationArray.isSunk()) {
+			if(shipLocationArray.isSunk(this)) {
 				continue;
 			}
 			else {
