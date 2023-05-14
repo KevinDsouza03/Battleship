@@ -46,7 +46,7 @@ public class gameBoard {
 	    }
 	    for (ship s : toCheck) {
 	        for (tile t : s.getLocation()) {;
-	           	this.getTile(t.x, t.y).updateOccupied(true);;
+	           	this.getTile(t.x, t.y).updateOccupied(true);
 	        }
 	    }
 	}

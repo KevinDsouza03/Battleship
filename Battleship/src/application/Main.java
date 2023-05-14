@@ -158,7 +158,7 @@ public class Main extends Application {
 								if(Carrier.isSelected()) {
 									//check if tile is valid for ship
 									if(ValidShip(Carrier1, Frow, Fcol)) {
-										System.out.println(boardH.getTile(Frow, Fcol).getX()+ boardH.getTile(Frow, Fcol).getY());
+										
 										//if valid change color, set occupied and add location
 										boardH.getTile(Frow, Fcol).setFill(Color.DARKSLATEGRAY);
 										boardH.getTile(Frow, Fcol).updateOccupied(true);
@@ -171,7 +171,7 @@ public class Main extends Application {
 								else if(BattleShip.isSelected()) {
 									//check if tile is valid for ship
 									if(ValidShip(BattleShip1, Frow, Fcol)) {
-										System.out.println(boardH.getTile(Frow, Fcol).getX()+ boardH.getTile(Frow, Fcol).getY());
+										
 										//if valid change color, set occupied and add location
 										boardH.getTile(Frow, Fcol).setFill(Color.LIGHTGRAY);
 										boardH.getTile(Frow, Fcol).updateOccupied(true);
@@ -185,7 +185,7 @@ public class Main extends Application {
 								else if(Cruiser.isSelected()) {
 									//check if tile is valid for ship
 									if(ValidShip(Cruiser1, Frow, Fcol)) {
-										System.out.println(boardH.getTile(Frow, Fcol).getX()+ boardH.getTile(Frow, Fcol).getY());
+										
 										//if valid change color, set occupied and add location
 										boardH.getTile(Frow, Fcol).setFill(Color.GRAY);
 										boardH.getTile(Frow, Fcol).updateOccupied(true);
@@ -199,7 +199,7 @@ public class Main extends Application {
 								else if(Submarine.isSelected()) {
 									//check if tile is valid for ship
 									if(ValidShip(Submarine1, Frow, Fcol)) {
-										System.out.println(boardH.getTile(Frow, Fcol).getX()+ boardH.getTile(Frow, Fcol).getY());
+										
 										//if valid change color, set occupied and add location
 										boardH.getTile(Frow, Fcol).setFill(Color.DIMGRAY);
 										boardH.getTile(Frow, Fcol).updateOccupied(true);
@@ -213,7 +213,7 @@ public class Main extends Application {
 								else if(Destroyer.isSelected()) {
 									//check if tile is valid for ship
 									if(ValidShip(Destroyer1, Frow, Fcol)) {
-										System.out.println(boardH.getTile(Frow, Fcol).getX()+ boardH.getTile(Frow, Fcol).getY());
+										
 										//if valid change color, set occupied and add location
 										boardH.getTile(Frow, Fcol).setFill(Color.DARKGREY);
 										boardH.getTile(Frow, Fcol).updateOccupied(true);
@@ -246,7 +246,7 @@ public class Main extends Application {
 				
 				root = new Scene(grid1Layout);
 				
-				System.out.println(nameFirst + "'s Grid");
+				//System.out.println(nameFirst + "'s Grid");
 				primaryStage.setScene(root);
 				
 				
@@ -292,12 +292,13 @@ public class Main extends Application {
 												
 												
 												//computer randomly shooting at human player board
-													//need to change to check that it isn't already hit
+													
 												Random rand = new Random();
 												
 												int x = rand.nextInt(10);
 												int y = rand.nextInt(10);
 												
+												//check that it isn't already hit
 												while(boardH.getTile(x, y).isHit()) {
 													x = rand.nextInt(10);
 													y = rand.nextInt(10);
@@ -308,25 +309,13 @@ public class Main extends Application {
 												computer.updateMove(x, y);
 												computer.fire(x, y, boardH);
 												if(boardH.getTile(x, y).isHit() && boardH.getTile(x, y).isOccupied()) {
-													boardH.getTile(x, y).setFill(Color.RED);
+													boardH.getTile(x, y).setFill(Color.ORANGE);
 												}
 												else if(boardH.getTile(x, y).isHit()) {
 													boardH.getTile(x, y).setFill(Color.KHAKI);
 												}
 												
-												//check if any human player ship has sunk
-												for(ship s : human.getFleet()){
-													
-													if(s.isSunk()) {
-														for(tile t: s.getLocation()) {
-															boardH.getTile(t.x, t.y).setFill(Color.FIREBRICK);
-														}
-													}
-													
-												}
 												
-												
-									
 												confirm.setDisable(false);
 															
 									
@@ -335,32 +324,12 @@ public class Main extends Application {
 							});
 							
 							
-							if(boardC.getTile(row, col).isHit() && boardC.getTile(row, col).isOccupied()) {	boardC.getTile(Frow, Fcol).setFill(Color.RED);}
+							if(boardC.getTile(row, col).isHit() && boardC.getTile(row, col).isOccupied()) {	boardC.getTile(Frow, Fcol).setFill(Color.ORANGE);}
 							else if(boardC.getTile(row, col).isHit()) boardC.getTile(Frow, Fcol).setFill(Color.KHAKI);
 							
-							if (boardC.checkWin(computer)) {
-								//if computer lost, display human win
-							}
-							else if (boardH.checkWin(human)) {
-								//if human lost, display computer win
-								Label computerWinner = new Label("Computer has won!" + nameFirst + "has lost!");
-								computerWinner.setStyle("-fx-background-color: black; -fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 50pt");
-								root = new Scene(computerWinner);
-								primaryStage.setScene(root);
-							}
 							
-							//check if ship has sunk
-							for(ship s : computer.getFleet()){
-								
-								if(s.isSunk()) {
-									for(tile t: s.getLocation()) {
-										boardC.getTile(t.x, t.y).setFill(Color.GRAY);
-									}
-									System.out.println(s.getLength() + "Sunk");
-									
-								}
-								
-							}
+							
+							
 							
 							//add to grid
 							ComputerGrid.add(boardC.getTile(row, col), col, row);
@@ -368,7 +337,34 @@ public class Main extends Application {
 							
 						}
 					}
+					//check if any human player ship has sunk
+					for(ship s : human.getFleet()){
+						for(tile t : s.getLocation()) {
+							System.out.println(t.x + "," + t.y + " human" + t.isHit());
+						}
+						if(s.isSunk()) {
+							for(tile t: s.getLocation()) {
+								boardH.getTile(t.x, t.y).setFill(Color.FIREBRICK);
+							}
+						}
+						
+					}
 					
+					//check if computer ship has sunk
+					for(ship s1 : computer.getFleet()){
+						for(tile t : s1.getLocation()) {
+							System.out.println(t.x +","+ t.y + " comp" + t.isHit());
+						}
+						
+						if(s1.isSunk()) {
+							for(tile t: s1.getLocation()) {
+								boardC.getTile(t.x, t.y).setFill(Color.FIREBRICK);
+							}
+							System.out.println(s1.getLength() + "Sunk");
+							
+						}
+						
+					}
 					
 					
 					
@@ -398,6 +394,21 @@ public class Main extends Application {
 						root = new Scene(grid2Layout);
 						primaryStage.setScene(root);
 						
+						if (boardC.checkWin(computer)) {
+							//if computer lost, display human win
+							Label humanWinner = new Label(nameFirst + " has won! Computer has lost!");
+							humanWinner.setStyle("-fx-background-color: black; -fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 50pt");
+							root = new Scene(humanWinner);
+							primaryStage.setScene(root);
+						}
+						else if (boardH.checkWin(human)) {
+							//if human lost, display computer win
+							Label computerWinner = new Label("Computer has won! " + nameFirst + " has lost!");
+							computerWinner.setStyle("-fx-background-color: black; -fx-text-fill: red; -fx-font-weight: bold; -fx-font-size: 50pt");
+							root = new Scene(computerWinner);
+							primaryStage.setScene(root);
+						}
+						
 						
 					
 					
@@ -424,13 +435,7 @@ public class Main extends Application {
 		launch(args);
 	}
 
-	public gameBoard getBoard1() {
-		return boardH;
-	}
-
-	public void setBoard1(gameBoard boardH) {
-		this.boardH = boardH;
-	}
+	
 	/**
 	 * Event for clicking tile
 	 * @param event - clicking tile
@@ -457,8 +462,8 @@ public class Main extends Application {
 			
 			//if only 1 tile 
 			if(ship1.getLocation().size()==1) {
-				double temprow = ship1.getLocation().get(0).getX();
-				double tempcol = ship1.getLocation().get(0).getY();
+				int temprow = ship1.getLocation().get(0).x;
+				int tempcol = ship1.getLocation().get(0).y;
 				//make sure if adding second tile that it is connected to first tile
 				if((row==temprow-1||row == temprow+1) && col == tempcol ) {
 					return true;
@@ -474,10 +479,10 @@ public class Main extends Application {
 			//if >1 tile make sure to stay horizontal or vertical
 			if(ship1.getLocation().size()>1) {
 				boolean horizontal = false;
-				double temprow = ship1.getLocation().get(0).getX();
-				double tempcol = ship1.getLocation().get(0).getY();
-				double lastrow = ship1.getLocation().get(ship1.getLocation().size()-1).getX();
-				double lastcol = ship1.getLocation().get(ship1.getLocation().size()-1).getY();
+				int temprow = ship1.getLocation().get(0).x;
+				int tempcol = ship1.getLocation().get(0).y;
+				int lastrow = ship1.getLocation().get(ship1.getLocation().size()-1).x;
+				int lastcol = ship1.getLocation().get(ship1.getLocation().size()-1).y;
 				
 				//checking if ship is horizontal or not
 				if ((ship1.getLocation().get(1).getY()==tempcol+1||ship1.getLocation().get(1).getY()==tempcol-1) && ship1.getLocation().get(1).getX() == temprow){
