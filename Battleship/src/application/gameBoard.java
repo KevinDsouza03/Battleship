@@ -2,7 +2,6 @@
  * gameBoard class that holds all information about a player/ai's board
  */
 package application;
-//import java.util.Arrays;
 
 public class gameBoard {
 	/***
@@ -46,7 +45,7 @@ public class gameBoard {
 	    }
 	    for (ship s : toCheck) {
 	        for (tile t : s.getLocation()) {;
-	           	this.getTile(t.x, t.y).updateOccupied(true);
+	           	this.getTile(t.x, t.y).updateOccupied(true);;
 	        }
 	    }
 	}
@@ -107,12 +106,26 @@ public class gameBoard {
 		System.out.println("All ships are sunk! " + ifLost.getName() + " has lost");
 		return true;
 	}
-	
-	public boolean validHit(int x, int y) {
-		if (board[x][y].isHit()) {
+	/**
+	 * check if it has been previously hit, if so return false
+	 * @param m - row
+	 * @param n - col
+	 * @return whether it has not been hit before and is valid
+	 */
+	public boolean validHit(int m, int n) {
+		if (board[m][n].isHit()) {
 			return false;
 		}
 		return true;
 		
+	}
+	/**
+	 * check whether a ship has been hit
+	 * @param m - row
+	 * @param n - col
+	 * @return whether a ship has been hit
+	 */
+	public boolean hitAShip(int m, int n) {
+		return board[m][n].isHit() && board[m][n].isOccupied();
 	}
 }

@@ -124,12 +124,12 @@ public class Main extends Application {
 				Destroyer.setStyle("-fx-text-fill: white");
 				
 				//create toggle group
-				ToggleGroup radioGroup2 = new ToggleGroup();
-				Carrier.setToggleGroup(radioGroup2);
-				BattleShip.setToggleGroup(radioGroup2);
-				Cruiser.setToggleGroup(radioGroup2);
-				Submarine.setToggleGroup(radioGroup2);
-				Destroyer.setToggleGroup(radioGroup2);
+				ToggleGroup radioGroup = new ToggleGroup();
+				Carrier.setToggleGroup(radioGroup);
+				BattleShip.setToggleGroup(radioGroup);
+				Cruiser.setToggleGroup(radioGroup);
+				Submarine.setToggleGroup(radioGroup);
+				Destroyer.setToggleGroup(radioGroup);
 				Carrier.setSelected(true);
 				
 				//creating the ships for human player
@@ -268,6 +268,29 @@ public class Main extends Application {
 					System.out.println("Human Player");
 					boardH.printBoard();
 					
+
+					//creating radiobuttons for different special moves
+					//add label to choose if want to use special move
+					Label selectMove = new Label("Please select which special move you would like to use (1 time use only: )");
+					selectShip.setStyle("-fx-text-fill: white");
+					
+					//add radio buttons
+					RadioButton rowAttack = new RadioButton("Row Attack");
+					RadioButton bomb = new RadioButton("Bomb");
+					
+					rowAttack.setStyle("-fx-text-fill: white");
+					bomb.setStyle("-fx-text-fill: white");
+					
+					
+					//create toggle group
+					ToggleGroup specialMoves = new ToggleGroup();
+					Carrier.setToggleGroup(specialMoves);
+					BattleShip.setToggleGroup(specialMoves);
+					
+					//create special moves
+					specialMove special1 = new rowAttack();
+					specialMove special2 = new bomb();
+					
 					
 
 					for(int row = 0; row < boardC.getWidth(); row++) {
@@ -281,10 +304,28 @@ public class Main extends Application {
 							int Fcol = col; 
 							int Frow = row;
 							
+							
+							
 							//mouse event to hit computer grid
 							boardC.getTile(row, col).setOnMouseClicked(event3 -> {RectangleClickShoot(event3);
+							
+							if(rowAttack.isSelected() && confirm.isDisable()) {
+								boardC.getTile(Frow, Fcol).setFill(Color.AQUA);
+								special1.specialAttack(Frow, Fcol, boardC);
+								rowAttack.setDisable(true);
+								confirm.setDisable(false);
+								
+							}
+							else if(bomb.isSelected() && confirm.isDisable()) {
+								boardC.getTile(Frow, Fcol).setFill(Color.AQUA);
+								special2.specialAttack(Frow, Fcol, boardC);
+								bomb.setDisable(true);
+								confirm.setDisable(false);
+								
+							}
+							
 											//check that tile wasn't already hit and allow only one tile to be hit
-											if(boardC.validHit(Frow, Fcol) && confirm.isDisable()) {
+							else if(boardC.validHit(Frow, Fcol) && confirm.isDisable()) {
 												//when tile hit, set different color
 												human.fire(Frow, Fcol, boardC);
 												
@@ -308,7 +349,7 @@ public class Main extends Application {
 												//firing at human player board
 												computer.updateMove(x, y);
 												computer.fire(x, y, boardH);
-												if(boardH.getTile(x, y).isHit() && boardH.getTile(x, y).isOccupied()) {
+												if(boardH.hitAShip(x, y)) {
 													boardH.getTile(x, y).setFill(Color.ORANGE);
 												}
 												else if(boardH.getTile(x, y).isHit()) {
@@ -323,8 +364,8 @@ public class Main extends Application {
 											
 							});
 							
-							
-							if(boardC.getTile(row, col).isHit() && boardC.getTile(row, col).isOccupied()) {	boardC.getTile(Frow, Fcol).setFill(Color.ORANGE);}
+							//check if it hit a ship
+							if(boardC.hitAShip(row, col)) {	boardC.getTile(Frow, Fcol).setFill(Color.ORANGE);}
 							else if(boardC.getTile(row, col).isHit()) boardC.getTile(Frow, Fcol).setFill(Color.KHAKI);
 							
 							
@@ -368,7 +409,9 @@ public class Main extends Application {
 					
 					
 					
-				
+					
+						
+					
 						Label comp = new Label("Computer Grid");
 						comp.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 20pt");
 						
@@ -384,7 +427,7 @@ public class Main extends Application {
 						HBox grids = new HBox(20, Hplayer, Cplayer);
 						
 						//layout and styling for the scene
-						VBox grid2Layout = new VBox(10, grids, confirm);
+						VBox grid2Layout = new VBox(10, grids, selectMove, rowAttack, bomb, confirm);
 						grid2Layout.setAlignment(Pos.CENTER);
 						grid2Layout.setStyle("-fx-background-color: black; -fx-font-weight: bold");
 						grid2Layout.setPadding(new Insets(10));
