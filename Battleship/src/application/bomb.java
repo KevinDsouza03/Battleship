@@ -16,7 +16,7 @@ public class bomb implements specialMove{
 		else {
 			attack.getTile(x, y).setFill(Color.KHAKI);
 		}
-		if((x+1) <= 10) {
+		if((x+1) < 10) {
 			attack.getTile(x+1, y).updateHit(true);
 			if(attack.hitAShip(x+1, y)) {
 				attack.getTile(x+1, y).setFill(Color.ORANGE);
@@ -27,7 +27,7 @@ public class bomb implements specialMove{
 			
 		}
 		
-		if((x-1) >= 0) {
+		if((x-1) > 0) {
 			attack.getTile(x-1, y).updateHit(true);
 			if(attack.hitAShip(x-1, y)) {
 				attack.getTile(x-1, y).setFill(Color.ORANGE);
@@ -37,7 +37,7 @@ public class bomb implements specialMove{
 			}
 		}
 		
-		if((y+1) <= 10) {
+		if((y+1) < 10) {
 			attack.getTile(x, y+1).updateHit(true);
 			if(attack.hitAShip(x, y+1)) {
 				attack.getTile(x, y+1).setFill(Color.ORANGE);
@@ -47,7 +47,7 @@ public class bomb implements specialMove{
 			}
 		}
 		
-		if((y-1) >= 0) {
+		if((y-1) > 0) {
 			attack.getTile(x, y-1).updateHit(true);
 			if(attack.hitAShip(x, y-1)) {
 				attack.getTile(x, y-1).setFill(Color.ORANGE);
