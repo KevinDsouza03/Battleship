@@ -307,7 +307,7 @@ public class Main extends Application {
 							
 							//checking if row attack is selected and that it is only used once
 							if(rowAttack.isSelected() && human.getRowAUsed() == false && confirm.isDisable()) {
-								boardC.getTile(Frow, Fcol).setFill(Color.AQUA);
+								
 								human.getRowA().specialAttack(Frow, Fcol, boardC);
 								human.setRowAUsed(true);
 								rowAttack.setDisable(true);
@@ -317,7 +317,7 @@ public class Main extends Application {
 							}
 							//checking if row attack is selected and that it is only used once
 							else if(bomb.isSelected() && human.getBombUsed() == false && confirm.isDisable()) {
-								boardC.getTile(Frow, Fcol).setFill(Color.AQUA);
+								
 								human.getBomb().specialAttack(Frow, Fcol, boardC);
 								human.setBombUsed(true);
 								rowAttack.setDisable(true);//only one move a turn

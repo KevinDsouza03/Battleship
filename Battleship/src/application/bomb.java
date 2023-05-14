@@ -10,52 +10,52 @@ public class bomb implements specialMove{
 	public void specialAttack(int x, int y, gameBoard attack) {
 		// TODO Auto-generated method stub
 		attack.getTile(x, y).updateHit(true);
-		if(attack.hitAShip(x, y)) {
-			attack.getTile(x, y).setFill(Color.ORANGE);
-		}
-		else {
-			attack.getTile(x, y).setFill(Color.KHAKI);
-		}
-		if((x+1) < 10) {
+		attack.getTile(x, y).setFill(Color.AQUA);
+		if((x+1) <= 10) {
 			attack.getTile(x+1, y).updateHit(true);
-			if(attack.hitAShip(x+1, y)) {
-				attack.getTile(x+1, y).setFill(Color.ORANGE);
+			attack.getTile(x+1, y).setFill(Color.AQUA);
+			
+			if((y+1) <= 10) {
+				attack.getTile(x+1, y+1).updateHit(true);
+				attack.getTile(x+1, y+1).setFill(Color.AQUA);
+				
 			}
-			else {
-				attack.getTile(x+1, y).setFill(Color.KHAKI);
+			if((y-1) >= 0) {
+				attack.getTile(x+1, y-1).updateHit(true);
+				attack.getTile(x+1, y-1).setFill(Color.AQUA);
+			
 			}
 			
 		}
 		
-		if((x-1) > 0) {
+		if((x-1) >= 0) {
 			attack.getTile(x-1, y).updateHit(true);
-			if(attack.hitAShip(x-1, y)) {
-				attack.getTile(x-1, y).setFill(Color.ORANGE);
+			attack.getTile(x-1, y).setFill(Color.AQUA);
+			
+			if((y+1) <= 10) {
+				attack.getTile(x-1, y+1).updateHit(true);
+				attack.getTile(x-1, y+1).setFill(Color.AQUA);
+				
 			}
-			else {
-				attack.getTile(x-1, y).setFill(Color.KHAKI);
+			if((y-1) >= 0) {
+				attack.getTile(x-1, y-1).updateHit(true);
+				attack.getTile(x-1, y-1).setFill(Color.AQUA);
+				
 			}
 		}
 		
-		if((y+1) < 10) {
+		if((y+1) <= 10) {
 			attack.getTile(x, y+1).updateHit(true);
-			if(attack.hitAShip(x, y+1)) {
-				attack.getTile(x, y+1).setFill(Color.ORANGE);
-			}
-			else  {
-				attack.getTile(x, y+1).setFill(Color.KHAKI);
-			}
+			attack.getTile(x, y+1).setFill(Color.AQUA);
+			
 		}
+			
 		
-		if((y-1) > 0) {
+		if((y-1) >= 0) {
 			attack.getTile(x, y-1).updateHit(true);
-			if(attack.hitAShip(x, y-1)) {
-				attack.getTile(x, y-1).setFill(Color.ORANGE);
-			}
-			else {
-				attack.getTile(x, y-1).setFill(Color.KHAKI);
-			}
+			attack.getTile(x, y-1).setFill(Color.AQUA);
+			
 		}
-	}
-
+		}
 }
+	
