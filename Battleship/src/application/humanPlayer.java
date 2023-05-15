@@ -1,4 +1,9 @@
 package application;
+/***
+ * humanPlayer to represent our normal player
+ * @author dsouz
+ *
+ */
 public class humanPlayer extends player{
 
 	/***
@@ -9,8 +14,8 @@ public class humanPlayer extends player{
 	}
 	/***
 	 * paramaterized constructor for humanPlayer
-	 * @param n
-	 * @param f
+	 * @param n name
+	 * @param f ship[] of all ships
 	 */
 	public humanPlayer(String n, ship[] f) {
 		super(n,f);

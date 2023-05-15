@@ -6,7 +6,11 @@ package application;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
+/***
+ * tile to represent invidual board spaces/ship locations
+ * @author dsouz
+ *
+ */
 public class tile extends Rectangle {
 	private boolean hit;
 	private boolean occupied;
@@ -24,6 +28,8 @@ public class tile extends Rectangle {
 	/***
 	 * Only a default constructor as we can just update each
 	 * tile individually
+	 * @param x row on board
+	 * @param y col on board
 	 */
 	public tile(int x, int y) {
 		super(x, y, 50, 50);
@@ -43,18 +49,18 @@ public class tile extends Rectangle {
 	public boolean isHit() {return this.hit;}
 	/***
 	 * Check for occupied tile
-	 * @return
+	 * @return boolean for occupied
 	 */
 	public boolean isOccupied() {return this.occupied;}
 	/***
 	 * when hit is received, update hit variable. Can be used for
 	 * both display and gameplay purposes
-	 * @param t
+	 * @param t boolean to update if hit or not
 	 */
 	public void updateHit(boolean t) {this.hit = t;}
 	/***
 	 * when a player places their ship on the board, update.
-	 * @param t
+	 * @param t boolean if occupied or not
 	 */
 	public void updateOccupied(boolean t) {this.occupied = t;}
 }

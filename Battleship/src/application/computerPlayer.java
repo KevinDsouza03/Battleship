@@ -2,7 +2,11 @@ package application;
 import java.util.ArrayList;
 import javafx.util.Pair;
 import java.util.Random;
-
+/***
+ * 
+ * @author dsouz
+ * 
+ */
 public class computerPlayer extends player{
 	
 	ArrayList<Pair<Integer,Integer>> playList;
@@ -19,8 +23,8 @@ public class computerPlayer extends player{
 	}
 	/***
 	 * Paramaterized Constructor for computerPlayer
-	 * @param n
-	 * @param f
+	 * @param n name
+	 * @param f array of ships[] for player
 	 */
 	public computerPlayer(String n,ship[] f) {
 		super(n,f);
@@ -34,13 +38,15 @@ public class computerPlayer extends player{
 	 * @param x
 	 * @param y
 	 */
-    public void updateMove(int x, int y) {
-        if (!playList.isEmpty()) {
-            Pair<Integer, Integer> lastMove = playList.remove(playList.size()-1);
-            x = lastMove.getKey();
-            y = lastMove.getValue();
-        }
-    }
+	public Pair<Integer, Integer> updateMove(int x, int y) {
+	    if (!playList.isEmpty()) {
+	        Pair<Integer, Integer> lastMove = playList.remove(playList.size()-1);
+	        x = lastMove.getKey();
+	        y = lastMove.getValue();
+	    }
+	    return new Pair<Integer, Integer>(x, y);
+	}
+
 	/***
 	 * This function works as a helper function to generate random ships and populate the computerPlayer calling it.
 	 * It works by trying to place a ship 100 times (which will almost always result in placement), and then
@@ -48,7 +54,7 @@ public class computerPlayer extends player{
 	 * occupiedTiles. If good placement and put that into ship and the occupiedTiles.
 	 * Then keep going for other ships. If bad placement, check the next generated, valid location and
 	 * continue 100 times.
-	 * @return
+	 * @return computerPlayer with generate ships
 	 */
     public computerPlayer generatePlayer() {
         // Generate fleet

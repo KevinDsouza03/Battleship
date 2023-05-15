@@ -3,7 +3,11 @@
  */
 package application;
 import java.util.Random;
-import java.util.Scanner;
+/***
+ * console simulator
+ * @author dsouz
+ *
+ */
 public class consoleRunner {
 	
 	/***
@@ -68,10 +72,10 @@ public class consoleRunner {
 	}
 	/***
 	 * This will take all needed to simulate a turn on the board.
-	 * @param p1
-	 * @param p1Board
-	 * @param p2
-	 * @param p2Board
+	 * @param p1 player 1
+	 * @param p1Board p1 board
+	 * @param p2 p2
+	 * @param p2Board p2 board
 	 */
 	public void play(player p1, gameBoard p1Board, player p2, gameBoard p2Board) {
 		Random rand = new Random();
@@ -99,10 +103,10 @@ public class consoleRunner {
 	}
 	/***
 	 * Human vs computer simulator
-	 * @param p1
-	 * @param p1Board
-	 * @param p2
-	 * @param p2Board
+	 * @param p1 human Player
+	 * @param p1Board humans board
+	 * @param p2 computer player
+	 * @param p2Board computers board
 	 * @param x
 	 * @param y
 	 */

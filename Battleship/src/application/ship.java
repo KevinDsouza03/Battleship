@@ -1,7 +1,11 @@
 package application;
 
 import java.util.ArrayList;
-
+/***
+ * 
+ * @author dsouz
+ *
+ */
 public class ship {
 	//size and location of ship
 	private int length;

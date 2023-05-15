@@ -18,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import java.util.Random;
+import javafx.util.Pair;
 /**
  * 
  * @author vanessali
@@ -349,7 +350,9 @@ public class Main extends Application {
 												
 												
 												//firing at human player board
-												computer.updateMove(x, y);
+												Pair<Integer, Integer> updatedMove = computer.updateMove(x, y);
+												x = updatedMove.getKey();
+												y = updatedMove.getValue();
 												computer.fire(x, y, boardH);
 												if(boardH.hitAShip(x, y)) {
 													boardH.getTile(x, y).setFill(Color.ORANGE);

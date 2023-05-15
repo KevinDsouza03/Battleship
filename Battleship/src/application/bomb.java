@@ -1,7 +1,11 @@
 package application;
 
 import javafx.scene.paint.Color;
-
+/***
+ * 
+ * @author vanessali
+ *
+ */
 public class bomb implements specialMove{
 	/**
 	 * attacks tiles around chosen tile

@@ -1,8 +1,9 @@
+
+package application;
 /***
  * gameBoard class that holds all information about a player/ai's board
+ * @author dsouz
  */
-package application;
-
 public class gameBoard {
 	/***
 	 * Constant width and height for arrays
@@ -36,7 +37,7 @@ public class gameBoard {
 	}
 	/***
 	 * Paramaterized constructor for gameBoard which updates according to player ships
-	 * @param p
+	 * @param p player
 	 */
 	public gameBoard(player p) {
 	    board = new tile[width][height];
@@ -55,9 +56,9 @@ public class gameBoard {
 
 	/***
 	 * 
-	 * @param m
-	 * @param n
-	 * @return
+	 * @param m x 
+	 * @param n y
+	 * @return tile on board
 	 */
 	public tile getTile(int m, int n) {
 		return board[m][n];
@@ -72,12 +73,12 @@ public class gameBoard {
 
 	/***
 	 * return height
-	 * @return
+	 * @return int of height
 	 */
 	public int getHeight() {return gameBoard.height;}
 	/**
 	 * return width
-	 * @return
+	 * @return int of width
 	 */
 	public int getWidth() {return gameBoard.width;}
 	/***
@@ -105,8 +106,8 @@ public class gameBoard {
 	
 	/***
 	 * Function to check if all ships are sunk for a given player. Compares board to actual player.
-	 * @param ifLost
-	 * @return
+	 * @param ifLost player to check if they lost against board. example: computerBoard checks computer
+	 * @return bool for win or loss
 	 */
 	public boolean checkWin(player ifLost) { //function essentially checks if I have lost by seeing if all my occupied are hit.
 		//iterate through fleet to check for a win.

@@ -1,7 +1,11 @@
 package application;
 
 import javafx.scene.paint.Color;
-
+/***
+ * 
+ * @author vanessali
+ *
+ */
 public class rowAttack implements specialMove{
 	/**
 	 * attacks the whole row

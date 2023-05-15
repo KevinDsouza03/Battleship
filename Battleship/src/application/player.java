@@ -26,8 +26,8 @@ public abstract class player {
 	}
 	/***
 	 * Parameterized constructor for player
-	 * @param n
-	 * @param f
+	 * @param n name
+	 * @param f ship[] of all ships
 	 */
 	public player(String n, ship[] f) {
 		fleet = f;
@@ -36,25 +36,25 @@ public abstract class player {
 	
 	/***
 	 * set player name, from first scene
-	 * @param n
+	 * @param n name
 	 */
 	public void setName(String n) {name = n;}
 	/***
 	 * return player name set above or in constructor.
-	 * @return
+	 * @return string name
 	 */
 	public String getName() {return name;}
 	
 	/***
 	 * return fleet
-	 * @return
+	 * @return ship[] / locations of all fleet
 	 */
 	public ship[] getFleet() {
 		return fleet;
 	}
 	/***
 	 * add ship to fleet array
-	 * @param s
+	 * @param s ship[] of all ships
 	 */
 	public void setFleet(ship []s) {
 		fleet = s;
@@ -113,6 +113,10 @@ public abstract class player {
 	/***
 	 * function to be implemented as to how a player fires a shot.
 	 * attack
+	 * @param x
+	 * @param y
+	 * @param attack gameboard to attack
+	 * @return boolean for successful shot
 	 */
 	public abstract boolean fire(int x, int y, gameBoard attack);
 	
