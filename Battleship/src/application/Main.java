@@ -4,12 +4,16 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -433,7 +437,8 @@ public class Main extends Application {
 						HBox grids = new HBox(20, Hplayer, Cplayer);
 						
 						//layout and styling for the scene
-						VBox grid2Layout = new VBox(10, grids, selectMove, rowAttack, bomb, confirm);
+						MenuBar menuBar = this.createMenuBar(primaryStage, boardH, boardC, human, computer);
+						VBox grid2Layout = new VBox(10, menuBar, grids, selectMove, rowAttack, bomb, confirm);
 						grid2Layout.setAlignment(Pos.CENTER);
 						grid2Layout.setStyle("-fx-background-color: black; -fx-font-weight: bold");
 						grid2Layout.setPadding(new Insets(10));
@@ -556,6 +561,44 @@ public class Main extends Application {
 		return true;
 	}
 
-	
+	private MenuBar createMenuBar(Stage primaryStage, gameBoard boardH, gameBoard boardC, player humanPlayer, player computerPlayer) {
+	    MenuBar menuBar = new MenuBar();
+
+	    // Create the File menu
+	    Menu fileMenu = new Menu("File");
+
+	    // Create the Exit MenuItem
+	    MenuItem exitItem = new MenuItem("Exit");
+	    exitItem.setOnAction(event -> {
+	        primaryStage.close();
+	    });
+
+	    // Create the Save MenuItem
+	    MenuItem save = new MenuItem("Save");
+	    save.setOnAction(event -> {
+	        serialize gameData = new serialize();
+	        // Getting board data
+	        gameData.getGameBoardsData(boardH);
+	        gameData.getGameBoardsData(boardC);
+
+	        // Getting player data
+	         gameData.getPlayerData(humanPlayer);
+	         gameData.getPlayerData(computerPlayer);
+
+	        gameData.saveData();
+	    });
+
+	    // Add the Exit and Save MenuItems to the File menu
+	    fileMenu.getItems().addAll(exitItem, save);
+
+	    // Add the File menu to the MenuBar
+	    menuBar.getMenus().add(fileMenu);
+
+	    // Add the MenuBar to a BorderPane
+	    BorderPane borderPane = new BorderPane();
+	    borderPane.setTop(menuBar);
+
+	    return menuBar;
+	}
 
 }
