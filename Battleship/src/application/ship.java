@@ -1,12 +1,13 @@
 package application;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 /***
  * 
  * @author dsouz
  *
  */
-public class ship {
+public class ship implements Serializable{
 	//size and location of ship
 	private int length;
 	private ArrayList<tile> location;

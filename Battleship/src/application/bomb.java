@@ -1,12 +1,14 @@
 package application;
 
+import java.io.Serializable;
+
 import javafx.scene.paint.Color;
 /***
  * 
  * @author vanessali
  *
  */
-public class bomb implements specialMove{
+public class bomb implements specialMove, Serializable{
 	/**
 	 * attacks tiles around chosen tile
 	 */

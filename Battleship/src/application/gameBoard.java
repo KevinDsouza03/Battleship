@@ -149,4 +149,13 @@ public class gameBoard implements Serializable {
 	public boolean hitAShip(int m, int n) {
 		return board[m][n].isHit() && board[m][n].isOccupied();
 	}
+	public void copyBoard(gameBoard otherBoard) {
+	    for (int i = 0; i < width; i++) {
+	        for (int j = 0; j < height; j++) {
+	            this.getTile(i, j).updateOccupied(otherBoard.getTile(i, j).isOccupied());
+	            this.getTile(i, j).updateHit(otherBoard.getTile(i, j).isHit());
+	        }
+	    }
+	}
+
 }

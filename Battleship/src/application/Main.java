@@ -563,10 +563,14 @@ public class Main extends Application {
 	}
 
 	private MenuBar createMenuBar(Stage primaryStage, gameBoard boardH, gameBoard boardC, player humanPlayer, player computerPlayer) {
-	    MenuBar menuBar = new MenuBar();
 
-	    // Create the File menu
-	    Menu fileMenu = new Menu("File");
+        serialize gameData = new serialize();
+
+        //creating menu bar
+        MenuBar menuBar = new MenuBar();
+
+        //create file menu
+        Menu fileMenu = new Menu("File");
         MenuItem save = new MenuItem("Save");
         MenuItem load = new MenuItem("Load");
         MenuItem exitItem = new MenuItem("Exit");
@@ -574,48 +578,46 @@ public class Main extends Application {
         fileMenu.getItems().add(load);
         fileMenu.getItems().add(exitItem);
 
+
+
         exitItem.setOnAction(event ->
-        {
-           primaryStage.close();
-        });
+          {
+             primaryStage.close();
+          });
 
-      save.setOnAction(event ->
-        {
-           serialize gameData = new serialize();
-           //getting board data
-           gameData.getGameBoardsData(boardH);
-           gameData.getGameBoardsData(boardC);
+        save.setOnAction(event ->
+          {
 
-           //getting player data
-           //gameData.getPlayerData(humanPlayer);
-           //gameData.getPlayerData(computerPlayer);
+             //getting board data
+             gameData.getGameHumanBoardsData(boardH);
+             gameData.getGameComputerBoardsData(boardC);
 
-           gameData.saveData();
+             //getting player data
+             gameData.getGameHumanPlayerData(humanPlayer);
+             gameData.getGameComputerPlayerData(computerPlayer);
 
-        });
+             gameData.saveData();
 
-      load.setOnAction(event ->
-        {
-           serialize gameData = new serialize();
-           //getting board data
-           gameData.getGameBoardsData(boardH);
-           gameData.getGameBoardsData(boardC);
+          });
 
-           //getting player data
-           gameData.getPlayerData(humanPlayer);
-           gameData.getPlayerData(computerPlayer);
+        load.setOnAction(event ->
+          {
+        	 boardH.copyBoard(gameData.loadHumanBoard());
+             boardC.copyBoard(gameData.loadComputerBoard());
+             humanPlayer.setName(gameData.loadHuman().getName()); 
+             humanPlayer.setFleet(gameData.loadHuman().getFleet());
+             computerPlayer.setName(gameData.loadComputer().getName());
+             computerPlayer.setFleet(gameData.loadComputer().getFleet());
 
-           gameData.loadData();
+          });
 
-        });
+     // Add the File menu to the menu bar.
+          menuBar.getMenus().addAll(fileMenu);
 
-   // Add the File menu to the menu bar.
-        menuBar.getMenus().addAll(fileMenu);
-
-     // Add the menu bar to a BorderPane.
-        BorderPane borderPane = new BorderPane();
-        borderPane.setTop(menuBar);
-	    return menuBar;
-	}
+       // Add the menu bar to a BorderPane.
+          BorderPane borderPane = new BorderPane();
+          borderPane.setTop(menuBar);
+        return menuBar;
+    }
 
 }

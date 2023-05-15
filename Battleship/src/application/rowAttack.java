@@ -1,12 +1,14 @@
 package application;
 
+import java.io.Serializable;
+
 import javafx.scene.paint.Color;
 /***
  * 
  * @author vanessali
  *
  */
-public class rowAttack implements specialMove{
+public class rowAttack implements specialMove, Serializable{
 	/**
 	 * attacks the whole row
 	 */
