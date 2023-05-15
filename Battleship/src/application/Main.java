@@ -23,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import java.util.Random;
 import javafx.util.Pair;
+import java.io.Serializable;
 /**
  * 
  * @author vanessali

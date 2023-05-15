@@ -6,12 +6,13 @@ package application;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import java.io.Serializable;
 /***
  * tile to represent invidual board spaces/ship locations
  * @author dsouz
  *
  */
-public class tile extends Rectangle {
+public class tile extends Rectangle implements Serializable{
 	private boolean hit;
 	private boolean occupied;
 	int x;
