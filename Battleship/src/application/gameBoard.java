@@ -1,10 +1,13 @@
 
 package application;
+
+import java.io.Serializable;
+
 /***
  * gameBoard class that holds all information about a player/ai's board
  * @author dsouz
  */
-public class gameBoard {
+public class gameBoard implements Serializable {
 	/***
 	 * Constant width and height for arrays
 	 */

@@ -6,11 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-/***
- * 
- * @author JaydonS
- *
- */
+
 public class serialize {
 
     //player data
@@ -40,30 +36,30 @@ public class serialize {
 
     //saving data
     public void saveData() {
+        ArrayList<Object> serilaizedata = new ArrayList<Object>();
+        serilaizedata.add(gameBoards);
+        serilaizedata.add(players);
+
     try {
         FileOutputStream outStream = new FileOutputStream("data.dat");
         ObjectOutputStream ObjectOutStream = new ObjectOutputStream(outStream);
-        ObjectOutStream.writeObject(gameBoards.get(0));
-        ObjectOutStream.writeObject(gameBoards.get(1));
-        ObjectOutStream.writeObject(players.get(0));
-        ObjectOutStream.writeObject(players.get(1));
+        ObjectOutStream.writeObject(serilaizedata);
         ObjectOutStream.close();
         outStream.close();
-        System.out.print("Data serialized ");
+        System.out.print("Data serialized");
     }
-}
-
-    //loading data
+    catch (IOException e) {
+        e.printStackTrace();
+    }
+    }
+//loading data
     public void loadData() {
-        ArrayList<Object> deserializedGb = new ArrayList<Object>();//deserialized gameboard arraylist
-        ArrayList<Object> deserializedP = new ArrayList<Object>();//deserialized player arraylist
-
+        ArrayList<Object> deserializedData = new ArrayList<Object>();
         //loading data
         try {
             FileInputStream inStream = new FileInputStream("data.dat");
             ObjectInputStream objectInputFile = new ObjectInputStream(inStream);
-            deserializedGb = (ArrayList<Object>)objectInputFile.readObject();
-            deserializedP = (ArrayList<Object>)objectInputFile.readObject();
+            deserializedData = (ArrayList<Object>)objectInputFile.readObject();
             objectInputFile.close();
             inStream.close();
         }
@@ -75,18 +71,19 @@ public class serialize {
             return;
         }
 
-        //instantiating data
-        for(int i =0; i < 1; i++) {
-        gameBoard[] retrievedGameBoards = (gameBoard[]) deserializedGb.get(i);
-        System.out.println("Players Board: " + "width " + retrievedGameBoards[i].getWidth() + "height " + retrievedGameBoards[i].getHeight());
-        retrievedGameBoards[i].printBoard();
+        //deserialized data
+        gameBoard[] retrievedGameBoards = (gameBoard[]) deserializedData.get(0);
+        player[] retrievedPlayers = (player[]) deserializedData.get(1);
+
+        //printing players and their boards
+        for(int i =0; i < retrievedPlayers.length; i++) {
+            System.out.println("Player: " + retrievedPlayers[i].getName());
+            System.out.println("Player fleet: " + retrievedPlayers[i].getFleet());
+            //System.out.println("Players Board: " + "width " + retrievedGameBoards[i].getWidth() + "height " + retrievedGameBoards[i].getHeight());
+            System.out.println("Players Board");
+            retrievedGameBoards[i].printBoard();
+
         }
 
-        //getting error
-//        for(int i =0; i < 1; i++) {
-//            gameBoard[] retrievedPlayers = (gameBoard[]) deserializedP.get(i);
-//            System.out.println("Players: " + retrievedPlayers[i].getName());
-//            System.out.println("Players: " + retrievedPlayers[i].getFleet());
-//            }
     }
 }

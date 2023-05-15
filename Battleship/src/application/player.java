@@ -1,11 +1,13 @@
 package application;
 
+import java.io.Serializable;
+
 /***
  * Player class to represent what a Battleship player would have!
  * @author dsouz
  *
  */
-public abstract class player {
+public abstract class player implements Serializable {
 	/***
 	 * Represents all the player's ships
 	 */

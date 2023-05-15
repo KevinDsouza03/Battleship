@@ -566,38 +566,54 @@ public class Main extends Application {
 
 	    // Create the File menu
 	    Menu fileMenu = new Menu("File");
+        MenuItem save = new MenuItem("Save");
+        MenuItem load = new MenuItem("Load");
+        MenuItem exitItem = new MenuItem("Exit");
+        fileMenu.getItems().add(save);
+        fileMenu.getItems().add(load);
+        fileMenu.getItems().add(exitItem);
 
-	    // Create the Exit MenuItem
-	    MenuItem exitItem = new MenuItem("Exit");
-	    exitItem.setOnAction(event -> {
-	        primaryStage.close();
-	    });
+        exitItem.setOnAction(event ->
+        {
+           primaryStage.close();
+        });
 
-	    // Create the Save MenuItem
-	    MenuItem save = new MenuItem("Save");
-	    save.setOnAction(event -> {
-	        serialize gameData = new serialize();
-	        // Getting board data
-	        gameData.getGameBoardsData(boardH);
-	        gameData.getGameBoardsData(boardC);
+      save.setOnAction(event ->
+        {
+           serialize gameData = new serialize();
+           //getting board data
+           gameData.getGameBoardsData(boardH);
+           gameData.getGameBoardsData(boardC);
 
-	        // Getting player data
-	         gameData.getPlayerData(humanPlayer);
-	         gameData.getPlayerData(computerPlayer);
+           //getting player data
+           //gameData.getPlayerData(humanPlayer);
+           //gameData.getPlayerData(computerPlayer);
 
-	        gameData.saveData();
-	    });
+           gameData.saveData();
 
-	    // Add the Exit and Save MenuItems to the File menu
-	    fileMenu.getItems().addAll(exitItem, save);
+        });
 
-	    // Add the File menu to the MenuBar
-	    menuBar.getMenus().add(fileMenu);
+      load.setOnAction(event ->
+        {
+           serialize gameData = new serialize();
+           //getting board data
+           gameData.getGameBoardsData(boardH);
+           gameData.getGameBoardsData(boardC);
 
-	    // Add the MenuBar to a BorderPane
-	    BorderPane borderPane = new BorderPane();
-	    borderPane.setTop(menuBar);
+           //getting player data
+           gameData.getPlayerData(humanPlayer);
+           gameData.getPlayerData(computerPlayer);
 
+           gameData.loadData();
+
+        });
+
+   // Add the File menu to the menu bar.
+        menuBar.getMenus().addAll(fileMenu);
+
+     // Add the menu bar to a BorderPane.
+        BorderPane borderPane = new BorderPane();
+        borderPane.setTop(menuBar);
 	    return menuBar;
 	}
 
