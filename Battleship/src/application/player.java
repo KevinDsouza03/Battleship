@@ -17,12 +17,18 @@ public abstract class player {
 	boolean rowAUsed = false;
 	boolean bombUsed = false;
 	
-	
+	/***
+	 * Default Constructor for Player
+	 */
 	public player() {
 		fleet = new ship[5];
 		name = "Bob";
 	}
-	
+	/***
+	 * Parameterized constructor for player
+	 * @param n
+	 * @param f
+	 */
 	public player(String n, ship[] f) {
 		fleet = f;
 		name = n;
@@ -46,6 +52,10 @@ public abstract class player {
 	public ship[] getFleet() {
 		return fleet;
 	}
+	/***
+	 * add ship to fleet array
+	 * @param s
+	 */
 	public void setFleet(ship []s) {
 		fleet = s;
 	}

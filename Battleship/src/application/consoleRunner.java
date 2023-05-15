@@ -1,8 +1,14 @@
+/***
+ * A class that simulates the human vs computer and human vs human aspect of battleship.
+ */
 package application;
 import java.util.Random;
 import java.util.Scanner;
 public class consoleRunner {
 	
+	/***
+	 * Default constructor
+	 */
 	public consoleRunner() {
 		ship temp[] = new ship[5];
 		temp[0] = new ship(5);
@@ -43,7 +49,15 @@ public class consoleRunner {
 //		
 		
 	}
-	
+	/**
+	 * Paramaterized Constructor
+	 * @param human
+	 * @param computer
+	 * @param hBoard
+	 * @param cBoard
+	 * @param x
+	 * @param y
+	 */
 	public consoleRunner(humanPlayer human, computerPlayer computer, gameBoard hBoard, gameBoard cBoard,int x, int y) {
 		
 		//now play game
@@ -53,7 +67,7 @@ public class consoleRunner {
 		
 	}
 	/***
-	 * This will take all need
+	 * This will take all needed to simulate a turn on the board.
 	 * @param p1
 	 * @param p1Board
 	 * @param p2
@@ -83,7 +97,15 @@ public class consoleRunner {
 		p2Board.printBoard();
 		System.out.println("Game Over");
 	}
-	
+	/***
+	 * Human vs computer simulator
+	 * @param p1
+	 * @param p1Board
+	 * @param p2
+	 * @param p2Board
+	 * @param x
+	 * @param y
+	 */
 	public void humanvsComputer(humanPlayer p1, gameBoard p1Board, computerPlayer p2, gameBoard p2Board,int x, int y) {
 		Random rand = new Random();
 		System.out.println("Player1 Board");

@@ -1,13 +1,23 @@
 package application;
 public class humanPlayer extends player{
 
+	/***
+	 * Default constructor
+	 */
 	public humanPlayer() {
 		super();
 	}
-
+	/***
+	 * paramaterized constructor for humanPlayer
+	 * @param n
+	 * @param f
+	 */
 	public humanPlayer(String n, ship[] f) {
 		super(n,f);
 	}
+	/***
+	 * as this is a human fire, we take in an x,y and check for validity, then simply update.
+	 */
 	@Override
 	public boolean fire(int x, int y, gameBoard attack) {
 		if (attack.getTile(x, y).isHit()) {

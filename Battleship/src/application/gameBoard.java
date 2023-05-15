@@ -34,7 +34,10 @@ public class gameBoard {
 		 * we can update after user places their ships.
 		 */
 	}
-	
+	/***
+	 * Paramaterized constructor for gameBoard which updates according to player ships
+	 * @param p
+	 */
 	public gameBoard(player p) {
 	    board = new tile[width][height];
 	    ship toCheck[] = p.getFleet(); // basically getting all the occupied ships w coordinates.
@@ -50,7 +53,12 @@ public class gameBoard {
 	    }
 	}
 
-
+	/***
+	 * 
+	 * @param m
+	 * @param n
+	 * @return
+	 */
 	public tile getTile(int m, int n) {
 		return board[m][n];
 	}
@@ -62,10 +70,19 @@ public class gameBoard {
 	 * @return
 	 */
 
+	/***
+	 * return height
+	 * @return
+	 */
 	public int getHeight() {return gameBoard.height;}
-	
+	/**
+	 * return width
+	 * @return
+	 */
 	public int getWidth() {return gameBoard.width;}
-	
+	/***
+	 * display board according to hits, occupied, hits + occupied, and empty.
+	 */
 	public void printBoard() {
 		String temp = "";
 		for(int i = 0; i < height; i++) {

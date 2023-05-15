@@ -8,14 +8,20 @@ public class computerPlayer extends player{
 	ArrayList<Pair<Integer,Integer>> playList;
 	ArrayList<Pair<Integer,Integer>> played;
 	
-	
+	/***
+	 * Default constructor for computerPlayer
+	 */
 	public computerPlayer() {
 		super();
 		playList = new ArrayList<Pair<Integer,Integer>>(); //initalize arraylist to store next hits with 10.
 		//treat it as a stack so we can pop for the next good move and append the next good moves.
 		played = new ArrayList<Pair<Integer,Integer>>();
 	}
-	
+	/***
+	 * Paramaterized Constructor for computerPlayer
+	 * @param n
+	 * @param f
+	 */
 	public computerPlayer(String n,ship[] f) {
 		super(n,f);
 		playList = new ArrayList<Pair<Integer,Integer>>();
@@ -23,7 +29,11 @@ public class computerPlayer extends player{
 	}
 	
 	
-	
+	/***
+	 * Helper function for the fire implementation, to update the next shot with our stack/playList.
+	 * @param x
+	 * @param y
+	 */
     public void updateMove(int x, int y) {
         if (!playList.isEmpty()) {
             Pair<Integer, Integer> lastMove = playList.remove(playList.size()-1);
